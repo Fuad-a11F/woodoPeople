@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const Game: React.FC = () => {
-  return <h2>Игра</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Игра
+    </Typography>
+  )
 }
 
-export default Game;
+export default Game

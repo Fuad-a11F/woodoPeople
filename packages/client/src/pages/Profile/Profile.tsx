@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const Profile: React.FC = () => {
-  return <h2>Профиль пользователя</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Профиль
+    </Typography>
+  )
 }
 
-export default Profile;
+export default Profile

@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const NotFound: React.FC = () => {
-  return <h2>Страница не найдена</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Страница не найдена
+    </Typography>
+  )
 }
 
-export default NotFound;
+export default NotFound

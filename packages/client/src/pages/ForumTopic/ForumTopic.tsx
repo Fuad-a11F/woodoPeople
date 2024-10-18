@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const ForumTopic: React.FC = () => {
-  return <h2>Топик форума</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Топик форума
+    </Typography>
+  )
 }
 
-export default ForumTopic;
+export default ForumTopic

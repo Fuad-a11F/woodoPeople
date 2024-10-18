@@ -13,6 +13,8 @@ import {
   NotFound,
 } from './pages'
 
+import { Menu } from './entities'
+
 import './App.css'
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <Menu />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/forum" element={<Forum />} />

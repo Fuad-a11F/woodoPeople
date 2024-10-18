@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const Login: React.FC = () => {
-  return <h2>Логин</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Логин
+    </Typography>
+  )
 }
 
-export default Login;
+export default Login

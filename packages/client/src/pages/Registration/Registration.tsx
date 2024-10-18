@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const Registration: React.FC = () => {
-  return <h2>Регистрация</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Регистрация
+    </Typography>
+  )
 }
 
-export default Registration;
+export default Registration

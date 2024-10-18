@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Typography from '@mui/material/Typography'
 
 const Leaderboard: React.FC = () => {
-  return <h2>Лидерборд</h2>
+  return (
+    <Typography variant="h2" gutterBottom>
+      Лидерборд
+    </Typography>
+  )
 }
 
-export default Leaderboard;
+export default Leaderboard
