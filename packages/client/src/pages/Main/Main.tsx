@@ -10,8 +10,6 @@ import {
   Typography,
 } from '@mui/material'
 
-import woodoku from './assets/unnamed.png'
-
 const Main: React.FC = () => {
   const navigate = useNavigate()
 
@@ -24,12 +22,11 @@ const Main: React.FC = () => {
       <Stack direction="row" spacing={6} mt={10} alignItems="flex-start">
         <Box>
           <img
-            src={woodoku}
-            alt=" Woodoku"
+            src={'unnamed.png'}
+            alt="Woodoku"
             style={{ height: '100%', maxWidth: '430px' }}
           />
         </Box>
-
         <Box>
           <Box>
             <Typography
