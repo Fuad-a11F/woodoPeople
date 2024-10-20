@@ -1,11 +1,7 @@
 import React from 'react'
-import { TextField, Button, Box, Typography, Grid2 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import woodoku from './../../utils/data/woodoku.jpg'
-
-interface LoginProps {
-  onLogin: () => void
-}
+import { TextField, Button, Box, Typography, Grid2 } from '@mui/material'
+import { LoginProps } from './types'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
@@ -25,7 +21,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         justifyContent="center"
         alignItems="center">
         <img
-          src={woodoku}
+          src="/woodoku.jpg"
           alt="Login Illustration"
           style={{ maxWidth: '100%', height: 'auto' }}
         />
