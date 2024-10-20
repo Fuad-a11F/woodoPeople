@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import {
@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 
-const FinishGame = () => {
+const FinishGame: React.FC = () => {
   const [open, setOpen] = useState(true)
   const navigate = useNavigate()
 
