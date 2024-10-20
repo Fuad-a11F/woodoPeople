@@ -13,7 +13,7 @@ import {
   NotFound,
 } from './pages'
 
-import { Menu } from './entities'
+import { Menu } from './components'
 
 import './App.css'
 
