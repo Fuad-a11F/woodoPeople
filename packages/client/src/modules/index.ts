@@ -1,1 +1,1 @@
-export {}
+export { Woodoku } from './Woodoku'
