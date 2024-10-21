@@ -1,14 +1,20 @@
 import React from 'react'
 
 import Typography from '@mui/material/Typography'
+import { Container } from '@mui/material'
 
-import { FinishGame } from '../../components/FinishGame'
+import { Woodoku } from '../../modules'
+
+import { FinishGameModal } from '../../components'
 
 const Game: React.FC = () => {
   return (
     <Typography variant="h2" gutterBottom>
-      Игра
-      <FinishGame />
+      <Container maxWidth={'sm'}>
+        <Woodoku />
+      </Container>
+
+      <FinishGameModal />
     </Typography>
   )
 }
