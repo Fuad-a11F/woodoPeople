@@ -1,22 +1,8 @@
 import React from 'react'
 import { Avatar, Card, CardContent, Grid2, Typography } from '@mui/material'
+import { Comment } from '../../interfaces'
 
-interface ForumCommentProps {
-  id: number
-  author: {
-    name: string
-    avatar: string
-  }
-  content: string
-  date: string
-}
-
-const ForumComment: React.FC<ForumCommentProps> = ({
-  id,
-  author,
-  content,
-  date,
-}) => {
+const ForumComment: React.FC<Comment> = ({ id, author, content, date }) => {
   return (
     <Card variant="outlined" key={id} sx={{ marginBottom: 2 }}>
       <CardContent>

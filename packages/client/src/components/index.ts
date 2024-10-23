@@ -1,4 +1,6 @@
 export { Menu } from './Menu'
 export { ForumComment } from './ForumComment'
 export { ForumItem } from './ForumItem'
+export { ForumPost } from './ForumPost'
 export { ForumNewComment } from './ForumNewComment'
+export { ForumNewTopic } from './ForumNewTopic'

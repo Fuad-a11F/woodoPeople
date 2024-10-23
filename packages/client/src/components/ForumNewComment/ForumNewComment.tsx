@@ -1,18 +1,8 @@
-import React, { useState, useId } from 'react'
+import React, { useState } from 'react'
 import { Button, Grid2, TextField, Typography } from '@mui/material'
 import { getDate } from '../../utils'
 
-interface User {
-  name: string
-  avatar: string
-}
-
-interface Comment {
-  id: string
-  author: User
-  content: string
-  date: string
-}
+import { Comment } from '../../interfaces'
 
 interface ForumNewCommentProps {
   onSubmit: (newComment: Comment) => void
@@ -20,13 +10,11 @@ interface ForumNewCommentProps {
 
 const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
   const [newComment, setNewComment] = useState<string>('')
-  const id = useId()
 
   const handleCommentSubmit = () => {
-    console.log('newComment >>>>> ', newComment)
     if (newComment.trim()) {
       const newCommentObject: Comment = {
-        id: id,
+        id: Date.now(),
         author: {
           name: 'Текущий пользователь', // заменить на актуальное имя пользователя, когда оно появится
           avatar: '/avatar.jpg',
@@ -48,6 +36,7 @@ const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
       <Grid2 container spacing={2} alignItems="center">
         <Grid2 size={{ xs: 12 }}>
           <TextField
+            autoComplete="off"
             fullWidth
             label="Ваш комментарий"
             variant="outlined"

@@ -1,37 +1,33 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 import CardActionArea from '@mui/material/CardActionArea'
 import { Author } from '../../shared'
-
 import { Card, CardContent, Typography, Grid2 } from '@mui/material'
 
-type ForumTopic = {
-  id: number
-  title: string
-  author: string
-  replies: number
-  lastPostDate: string
-  lastMessageAuthor: {
-    name: string
-    avatar: string
-  }
-}
+import { Topic } from '../../interfaces'
 
-const ForumItem: React.FC<ForumTopic> = ({
+const ForumItem: React.FC<Topic> = ({
   title,
   author,
   replies,
   lastPostDate,
   lastMessageAuthor,
 }) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/forum-topic')
+  }
+
   return (
     <Card variant="outlined">
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardContent>
           <Grid2 container spacing={2}>
-            <Grid2 size={{ xs: 7 }}>
+            <Grid2 size={{ xs: 8 }}>
               <Typography variant="subtitle1">{title}</Typography>
               <Typography variant="caption" color="text.secondary">
-                by {author}
+                by {author.name}
               </Typography>
             </Grid2>
             <Grid2 size={{ xs: 2 }} container alignItems="center">
@@ -40,9 +36,9 @@ const ForumItem: React.FC<ForumTopic> = ({
               </Typography>
             </Grid2>
             <Grid2
-              size={{ xs: 3 }}
+              size={{ xs: 2 }}
               container
-              justifyContent="flex-end"
+              justifyContent="flex-start"
               alignItems="center">
               <Author author={lastMessageAuthor} date={lastPostDate} />
             </Grid2>
