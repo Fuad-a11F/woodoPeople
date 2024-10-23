@@ -12,6 +12,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     navigate('/')
   }
 
+  const handleRegistrationClick = () => {
+    navigate('/registration')
+  }
+
   return (
     <Box display="flex" height="100vh">
       <Box
@@ -56,6 +60,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </Button>
             </Box>
           </form>
+          <Box mt={2} textAlign="center">
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleRegistrationClick}>
+              Регистрация
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>
