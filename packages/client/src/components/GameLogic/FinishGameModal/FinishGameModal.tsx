@@ -13,8 +13,8 @@ import {
   Typography,
 } from '@mui/material'
 
-const FinishGame: React.FC = () => {
-  const [open, setOpen] = useState(true)
+const FinishGameModal: React.FC = () => {
+  const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleClose = (_: unknown, reason: string) => {
@@ -82,4 +82,4 @@ const FinishGame: React.FC = () => {
   )
 }
 
-export default FinishGame
+export default FinishGameModal
