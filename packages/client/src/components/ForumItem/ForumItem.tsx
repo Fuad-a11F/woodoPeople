@@ -4,9 +4,9 @@ import CardActionArea from '@mui/material/CardActionArea'
 import { Author } from '../../shared'
 import { Card, CardContent, Typography, Grid2 } from '@mui/material'
 
-import { Topic } from '../../interfaces'
+import { ForumTopic } from '../../interfaces'
 
-const ForumItem: React.FC<Topic> = ({
+const ForumItem: React.FC<ForumTopic> = ({
   title,
   author,
   replies,
@@ -40,7 +40,10 @@ const ForumItem: React.FC<Topic> = ({
               container
               justifyContent="flex-start"
               alignItems="center">
-              <Author author={lastMessageAuthor} date={lastPostDate} />
+              <Author
+                lastMessageAuthor={lastMessageAuthor}
+                lastPostDate={lastPostDate}
+              />
             </Grid2>
           </Grid2>
         </CardContent>

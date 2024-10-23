@@ -14,7 +14,6 @@ export interface Topic {
   id: number
   title: string
   content: string
-  replies: number
   author: User
   comments: Comment[]
   lastPostDate: string
@@ -24,7 +23,7 @@ export interface Topic {
 export interface ForumTopic {
   id: number
   title: string
-  author: string
+  author: User
   replies: number
   lastPostDate: string
   lastMessageAuthor: User

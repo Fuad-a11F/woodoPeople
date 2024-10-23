@@ -1,14 +1,12 @@
 import React from 'react'
-import { Grid2, Box, Typography, Button } from '@mui/material'
+import { Grid2, Box, Typography } from '@mui/material'
 import { ForumItem, ForumNewTopic } from '../../components'
-import { Topic } from '../../interfaces'
+import { ForumTopic } from '../../interfaces'
 
-const topics: Topic[] = [
+const topics: ForumTopic[] = [
   {
     id: 1,
     title: 'How to learn React?',
-    content: '',
-    comments: [],
     author: { name: 'John Doe', avatar: '' },
     replies: 10,
     lastPostDate: '2024-10-01',
@@ -17,8 +15,6 @@ const topics: Topic[] = [
   {
     id: 2,
     title: 'What is TypeScript?',
-    content: '',
-    comments: [],
     author: { name: 'Jane Smith', avatar: '' },
     replies: 5,
     lastPostDate: '2024-09-28',
@@ -27,8 +23,6 @@ const topics: Topic[] = [
   {
     id: 3,
     title: 'Best practices for Material-UI',
-    content: '',
-    comments: [],
     author: { name: 'Alice Johnson', avatar: '' },
     replies: 12,
     lastPostDate: '2024-09-30',

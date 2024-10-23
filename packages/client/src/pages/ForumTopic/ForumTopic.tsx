@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  Avatar,
-  Grid2,
-  Divider,
-  Box,
-} from '@mui/material'
+import { Container, Typography, Divider } from '@mui/material'
 import { ForumPost, ForumComment, ForumNewComment } from '../../components'
 import { Comment, Topic } from '../../interfaces'
 
@@ -16,7 +7,6 @@ const topic: Topic = {
   id: 1,
   title: 'А как играть в эту вашу игру вообще?',
   content: 'Ничего непонятно',
-  replies: 10,
   author: {
     name: 'John Doe',
     avatar: '/avatar.jpg',

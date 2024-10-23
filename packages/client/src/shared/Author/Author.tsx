@@ -2,17 +2,11 @@ import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { ForumTopic } from '../../interfaces'
 
-type AuthorType = {
-  name: string
-  avatar: string
-}
+type AuthorProps = Omit<ForumTopic, 'id' | 'author' | 'title' | 'replies'>
 
-interface AuthorProps {
-  author: AuthorType
-  date: string
-}
-const Author: React.FC<AuthorProps> = ({ author, date }) => {
+const Author: React.FC<AuthorProps> = ({ lastMessageAuthor, lastPostDate }) => {
   return (
     <Box
       sx={{
@@ -22,8 +16,8 @@ const Author: React.FC<AuthorProps> = ({ author, date }) => {
         alignItems: 'center',
       }}>
       <Avatar
-        alt={author.name}
-        src={author.avatar}
+        alt={lastMessageAuthor.name}
+        src={lastMessageAuthor.avatar}
         sx={{ width: 36, height: 36 }}
       />
       <Box
@@ -33,8 +27,8 @@ const Author: React.FC<AuthorProps> = ({ author, date }) => {
           gap: 0,
           alignItems: 'left',
         }}>
-        <Typography variant="caption">{author.name}</Typography>
-        <Typography variant="caption">{date}</Typography>
+        <Typography variant="caption">{lastMessageAuthor.name}</Typography>
+        <Typography variant="caption">{lastPostDate}</Typography>
       </Box>
     </Box>
   )
