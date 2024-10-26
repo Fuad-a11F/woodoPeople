@@ -26,7 +26,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         navigate('/')
       }
     } catch (err) {
-      console.log('🚀 ~ handleSubmit ~ err:', err)
       setError('Ошибка авторизации. Проверьте логин и пароль.')
     }
   }
