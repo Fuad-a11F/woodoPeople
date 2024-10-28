@@ -40,7 +40,7 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
   })
 
   const handleBlur = (field: string, value: string) => {
-    let error = null
+    let error: string | null = null
     switch (field) {
       case 'first_name':
         error = validateFirstName(value)
