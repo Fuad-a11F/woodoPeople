@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TextField, Button, Box, Typography, Grid2 } from '@mui/material'
+import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
+import { SignInRequest } from '../../api/types'
+import { signIn } from '../../api/api'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
+  const [login, setLogin] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    onLogin()
-    navigate('/')
+    setError(null)
+
+    try {
+      const data: SignInRequest = { login, password }
+      const response = await signIn(data)
+
+      if (typeof response === 'object' && response.reason) {
+        setError(response.reason)
+      } else {
+        onLogin()
+        navigate('/')
+      }
+    } catch (err) {
+      setError('Ошибка авторизации. Проверьте логин и пароль.')
+    }
   }
 
   const handleRegistrationClick = () => {
@@ -41,6 +59,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               label="Логин"
               margin="normal"
               type="text"
+              value={login}
+              onChange={e => setLogin(e.target.value)}
               required
             />
             <TextField
@@ -48,8 +68,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               label="Пароль"
               margin="normal"
               type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               required
             />
+            {error && (
+              <Typography color="error" variant="body2" gutterBottom>
+                {error}
+              </Typography>
+            )}
             <Box mt={2}>
               <Button
                 fullWidth
