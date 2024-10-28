@@ -17,7 +17,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   })
 
   const handleBlur = (field: string, value: string) => {
-    let error = null
+    let error: string | null = null
     if (field === 'login') {
       error = validateLogin(value)
     } else if (field === 'password') {
