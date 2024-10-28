@@ -69,7 +69,10 @@ function App() {
             path="/profile"
             element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
           />
-          <Route path="/registration" element={<Registration />} />
+          <Route
+            path="/registration"
+            element={<Registration onRegister={handleLogin} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
