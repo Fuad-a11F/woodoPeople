@@ -36,6 +36,12 @@ function App() {
     setIsAuthenticated(true)
   }
 
+  const sampleData = [
+    { id: 1, name: 'Alice', score: 1200 },
+    { id: 2, name: 'Bob', score: 950 },
+    { id: 3, name: 'Charlie', score: 1100 },
+  ]
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -64,7 +70,11 @@ function App() {
             <Route
               path="/leaderboard"
               element={
-                isAuthenticated ? <Leaderboard /> : <Navigate to="/login" />
+                isAuthenticated ? (
+                  <Leaderboard data={sampleData} />
+                ) : (
+                  <Navigate to="/login" />
+                )
               }
             />
             <Route
