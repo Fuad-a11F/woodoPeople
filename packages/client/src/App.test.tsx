@@ -1,7 +1,7 @@
 import App from './App'
 import { render, screen } from '@testing-library/react'
 
-const appContent = 'WOODOKU'
+const appContent = 'Авторизация'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
