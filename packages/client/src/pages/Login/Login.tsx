@@ -4,16 +4,44 @@ import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
 import { SignInRequest } from '../../api/types'
 import { signIn } from '../../api/api'
+import { validateLogin, validatePassword } from '../../utils/validators'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
   const [login, setLogin] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState({
+    login: '',
+    password: '',
+  })
+
+  const handleBlur = (field: string, value: string) => {
+    let error: string | null = null
+    if (field === 'login') {
+      error = validateLogin(value)
+    } else if (field === 'password') {
+      error = validatePassword(value)
+    }
+    setFieldErrors(prevErrors => ({ ...prevErrors, [field]: error || '' }))
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setError(null)
+
+    const loginError = validateLogin(login)
+    const passwordError = validatePassword(password)
+
+    setFieldErrors({
+      login: loginError || '',
+      password: passwordError || '',
+    })
+
+    if (loginError || passwordError) {
+      setError('Пожалуйста, исправьте ошибки и повторите попытку')
+      return
+    }
 
     try {
       const data: SignInRequest = { login, password }
@@ -61,6 +89,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               type="text"
               value={login}
               onChange={e => setLogin(e.target.value)}
+              onBlur={e => handleBlur('login', e.target.value)}
+              helperText={fieldErrors.login}
+              error={Boolean(fieldErrors.login)}
               required
             />
             <TextField
@@ -70,6 +101,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              onBlur={e => handleBlur('password', e.target.value)}
+              helperText={fieldErrors.password}
+              error={Boolean(fieldErrors.password)}
               required
             />
             {error && (
