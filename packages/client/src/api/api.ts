@@ -4,6 +4,7 @@ import {
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  UserResponse,
 } from './types'
 
 const API_URL = 'https://ya-praktikum.tech/api/v2'
@@ -19,5 +20,19 @@ export const signUp = (data: SignUpRequest): Promise<SignUpResponse> => {
   return fetchWithConfig<SignUpResponse>(`${API_URL}/auth/signup`, {
     method: 'POST',
     data,
+  })
+}
+
+export const getUserData = (): Promise<UserResponse> => {
+  return fetchWithConfig<UserResponse>(`${API_URL}/auth/user`, {
+    method: 'GET',
+  })
+}
+
+export const saveAvatar = (data: FormData): Promise<UserResponse> => {
+  return fetchWithConfig<UserResponse>(`${API_URL}/user/profile/avatar`, {
+    method: 'PUT',
+    data,
+    isFileUpload: true,
   })
 }

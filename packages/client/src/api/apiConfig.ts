@@ -1,18 +1,25 @@
+type JsonObject = Record<string, any>
+type RequestBody = JsonObject | FormData
+
 type RequestConfig = {
   method: 'POST' | 'GET' | 'PUT' | 'DELETE'
-  data?: Record<string, any>
+  data?: RequestBody
+  isFileUpload?: boolean
 }
 
 async function fetchWithConfig<T>(
   url: string,
-  { method, data }: RequestConfig
+  { method, data, isFileUpload = false }: RequestConfig
 ): Promise<T> {
+  console.log('data >>>>> ', data)
   const response = await fetch(url, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: data ? JSON.stringify(data) : undefined,
+    headers: isFileUpload
+      ? {}
+      : {
+          'Content-Type': 'application/json',
+        },
+    body: isFileUpload ? (data as FormData) : JSON.stringify(data),
     credentials: 'include',
   })
 
