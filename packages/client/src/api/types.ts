@@ -21,3 +21,15 @@ export interface SignUpResponse {
   id?: number
   reason?: string
 }
+
+export interface UserResponse {
+  id: number
+  login: string
+  first_name: string
+  second_name: string
+  display_name: string
+  avatar: string
+  phone: string
+  email: string
+  reason?: string
+}
