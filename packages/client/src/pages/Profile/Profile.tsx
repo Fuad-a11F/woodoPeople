@@ -33,13 +33,7 @@ const UserProfile: React.FC = () => {
   }, [])
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      p={3}
-      bgcolor="#f7f9fc"
-      minHeight="100vh">
+    <Box display="flex" flexDirection="column" alignItems="center" p={3}>
       <Paper
         elevation={3}
         sx={{ p: 4, maxWidth: 500, width: '100%', borderRadius: 3 }}>
@@ -69,7 +63,16 @@ const UserProfile: React.FC = () => {
             Телефон: {userData?.phone}
           </Typography>
 
-          {userData ? <ChangeUserInformation {...userData} /> : ''}
+          {userData ? (
+            <ChangeUserInformation
+              onUserInformationSave={newData =>
+                setUserData({ ...userData, ...newData })
+              }
+              {...userData}
+            />
+          ) : (
+            ''
+          )}
           <ChangePassword />
         </Box>
       </Paper>

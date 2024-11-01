@@ -1,5 +1,7 @@
 import fetchWithConfig from './apiConfig'
 import {
+  changePasswordRequest,
+  ChangeUserInformationRequest,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
@@ -34,5 +36,23 @@ export const saveAvatar = (data: FormData): Promise<UserResponse> => {
     method: 'PUT',
     data,
     isFileUpload: true,
+  })
+}
+
+export const saveUserData = (
+  data: ChangeUserInformationRequest
+): Promise<UserResponse> => {
+  return fetchWithConfig<UserResponse>(`${API_URL}/user/profile`, {
+    method: 'PUT',
+    data,
+  })
+}
+
+export const saveUserPassword = (
+  data: changePasswordRequest
+): Promise<UserResponse> => {
+  return fetchWithConfig<UserResponse>(`${API_URL}/user/password`, {
+    method: 'PUT',
+    data,
   })
 }

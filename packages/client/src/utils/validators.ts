@@ -25,11 +25,19 @@ export const validateEmail = (value: string): string | null => {
 }
 
 export const validatePassword = (value: string): string | null => {
-  const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/
-  if (!regex.test(value)) {
-    return 'Пароль должен содержать от 8 до 40 символов, минимум одну заглавную букву и цифру'
+  // Проверяем длину строки
+  if (value.length < 8 || value.length > 40) {
+    return 'Пароль должен содержать от 8 до 40 символов'
   }
-  return null
+
+  // Проверяем, что в строке есть хотя бы одна заглавная буква и хотя бы одна цифра
+  const hasUppercase = /[A-Z]/.test(value)
+  const hasDigit = /\d/.test(value)
+
+  // Если оба условия выполнены, возвращаем true, иначе false
+  return hasUppercase && hasDigit
+    ? null
+    : 'Пароль должен содержать хотя бы одну заглавную букву и цифру'
 }
 
 export const validatePhone = (value: string): string | null => {

@@ -11,7 +11,6 @@ async function fetchWithConfig<T>(
   url: string,
   { method, data, isFileUpload = false }: RequestConfig
 ): Promise<T> {
-  console.log('data >>>>> ', data)
   const response = await fetch(url, {
     method,
     headers: isFileUpload

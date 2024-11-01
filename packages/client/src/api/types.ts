@@ -17,19 +17,33 @@ export interface SignUpRequest {
   phone: string
 }
 
+export type ChangeUserInformationRequest = Omit<
+  SignUpRequest,
+  'login' | 'password'
+>
+
 export interface SignUpResponse {
   id?: number
   reason?: string
 }
 
-export interface UserResponse {
-  id: number
+export interface changePasswordRequest {
+  oldPassword: string
+  newPassword: string
+  repeatPassword: string
+}
+
+export interface UserRequest {
   login: string
   first_name: string
   second_name: string
   display_name: string
-  avatar: string
   phone: string
   email: string
+}
+
+export interface UserResponse extends UserRequest {
+  id: number
+  avatar: string
   reason?: string
 }
