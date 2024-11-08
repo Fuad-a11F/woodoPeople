@@ -38,8 +38,6 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
 
   const user = useAppSelector(state => state.user.data)
 
-  console.log('user >>>> ', user)
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
   }
