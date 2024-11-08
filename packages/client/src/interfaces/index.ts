@@ -1,2 +1,5 @@
 export * from './forum.interface'
 export * from './leaderboard.interface'
+export * from './canvasGameLogic.interface'
+export * from './gamePoint.interface'
+export * from './finishGame.interface'
