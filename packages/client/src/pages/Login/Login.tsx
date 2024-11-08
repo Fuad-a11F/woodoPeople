@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
@@ -6,6 +6,8 @@ import { SignInRequest } from '../../api/types'
 import { getUserData, signIn } from '../../api/api'
 import { validateLogin, validatePassword } from '../../utils/validators'
 import { storeUserData } from '../../utils/storeUserData'
+import { fetchUserData } from '../../store/reducers/userSlice'
+import { useAppDispatch } from '../../store/hooks'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
@@ -16,6 +18,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     login: '',
     password: '',
   })
+
+  const dispatch = useAppDispatch()
 
   const handleBlur = (field: string, value: string) => {
     let error: string | null = null
@@ -52,6 +56,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         const userData = await getUserData()
         storeUserData(userData)
         onLogin()
+        dispatch(fetchUserData())
         navigate('/')
       } else if (typeof response === 'object' && response.reason) {
         setError(response.reason)

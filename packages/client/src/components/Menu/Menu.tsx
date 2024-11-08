@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import GamesIcon from '@mui/icons-material/Games'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../api/api'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 const pages: { [key: string]: string } = {
   Main: '/',
@@ -26,12 +27,18 @@ const settings: { [key: string]: string } = {
   Logout: 'login',
 }
 
+const RESOURCES_URL = 'https://ya-praktikum.tech/api/v2/resources/'
+
 function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
   const navigate = useNavigate()
+
+  const user = useAppSelector(state => state.user.data)
+
+  console.log('user >>>> ', user)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -145,7 +152,10 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={user ? user.display_name : ''}
+                  src={user ? `${RESOURCES_URL}${user.avatar}` : undefined}
+                />
               </IconButton>
             </Tooltip>
             <Menu

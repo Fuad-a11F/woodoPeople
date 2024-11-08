@@ -18,6 +18,8 @@ import {
 import { ChangeInformationProps, IChangeInformationError } from './types'
 import { saveUserData } from '../../api/api'
 import Typography from '@mui/material/Typography'
+import { useAppDispatch } from '../../store/hooks'
+import { setUser } from '../../store/reducers/userSlice'
 
 const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
   first_name,
@@ -26,6 +28,8 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
   phone,
   onUserInformationSave,
 }) => {
+  const dispatch = useAppDispatch()
+
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
   const [formData, setFormData] = useState<ChangeUserInformationRequest>({
@@ -90,6 +94,7 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
       } else {
         setIsEditDialogOpen(false)
         onUserInformationSave(response)
+        dispatch(setUser(response))
       }
     } catch (err) {
       setError('Ошибка при регистрации. Пожалуйста, попробуйте снова.')
