@@ -45,10 +45,13 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Menu />
+        {isAuthenticated && <Menu />}
         <ErrorBoundary>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route
+              path="/"
+              element={isAuthenticated ? <Main /> : <Navigate to="/login" />}
+            />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route
               path="/forum"
@@ -60,7 +63,10 @@ function App() {
                 isAuthenticated ? <ForumTopic /> : <Navigate to="/login" />
               }
             />
-            <Route path="/game" element={<Game />} />
+            <Route
+              path="/game"
+              element={isAuthenticated ? <Game /> : <Navigate to="/login" />}
+            />
             <Route
               path="/leaderboard"
               element={
