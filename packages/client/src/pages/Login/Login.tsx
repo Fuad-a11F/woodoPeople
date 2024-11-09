@@ -47,11 +47,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const data: SignInRequest = { login, password }
       const response = await signIn(data)
 
-      if (typeof response === 'object' && response.reason) {
-        setError(response.reason)
-      } else {
+      if (response === 'OK') {
         onLogin()
         navigate('/')
+      } else if (typeof response === 'object' && response.reason) {
+        setError(response.reason)
       }
     } catch (err) {
       setError('Ошибка авторизации. Проверьте логин и пароль.')
