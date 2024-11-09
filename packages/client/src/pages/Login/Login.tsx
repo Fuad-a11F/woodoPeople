@@ -50,6 +50,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       if (response === 'OK') {
         const userData = await getUserData()
+        console.log('🚀 ~ handleSubmit ~ userData:', userData)
         storeUserData(userData)
         onLogin()
         navigate('/')
