@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import GamesIcon from '@mui/icons-material/Games'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../api/api'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppSelector } from '../../store/hooks'
 
 const pages: { [key: string]: string } = {
   Main: '/',

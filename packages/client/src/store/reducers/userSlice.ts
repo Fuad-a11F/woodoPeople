@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { User } from '../../interfaces/user.interface'
 import { getUserData } from '../../api/api'
 
-type Nullable<T> = T | null
-
 interface UserState {
   data: User | null
   loading: boolean

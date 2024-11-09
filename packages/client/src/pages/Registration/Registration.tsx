@@ -13,7 +13,8 @@ import {
   validateRepeatPassword,
   validateSecondName,
 } from '../../utils/validators'
-import { IRegisterError, RegistrationProps } from './types'
+import { RegistrationProps } from './types'
+import { IValidationErrors } from '../../interfaces/errors.interface'
 
 const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
 
   const [repeatPassword, setRepeatPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
-  const [fieldErrors, setFieldErrors] = useState<IRegisterError>({
+  const [fieldErrors, setFieldErrors] = useState<IValidationErrors>({
     first_name: '',
     second_name: '',
     login: '',
@@ -82,7 +83,7 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
     e.preventDefault()
     setError(null)
 
-    const validationErrors: any = {}
+    const validationErrors: IValidationErrors = {}
     validationErrors.first_name = validateFirstName(formData.first_name)
     validationErrors.second_name = validateSecondName(formData.second_name)
     validationErrors.login = validateLogin(formData.login)

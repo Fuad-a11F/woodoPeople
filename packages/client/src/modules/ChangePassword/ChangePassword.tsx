@@ -12,13 +12,13 @@ import {
   validateRepeatPassword,
 } from '../../utils/validators'
 import { changePasswordRequest } from '../../api/types'
-import { IChangePasswordError } from './types'
 import { saveUserPassword } from '../../api/api'
 import Typography from '@mui/material/Typography'
+import { IValidationErrors } from '../../interfaces/errors.interface'
 
 const ChangePassword: React.FC = () => {
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false)
-  const [fieldErrors, setFieldErrors] = useState<IChangePasswordError>({
+  const [fieldErrors, setFieldErrors] = useState<IValidationErrors>({
     newPassword: '',
     repeatPassword: '',
   })
@@ -48,7 +48,7 @@ const ChangePassword: React.FC = () => {
     e.preventDefault()
     setError(null)
 
-    const validationErrors: any = {}
+    const validationErrors: IValidationErrors = {}
     validationErrors.newPassword = validatePassword(formData.newPassword)
     validationErrors.repeatPassword = validateRepeatPassword(
       formData.newPassword,
