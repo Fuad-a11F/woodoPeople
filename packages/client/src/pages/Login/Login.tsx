@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
 import { SignInRequest } from '../../api/types'
-import { signIn } from '../../api/api'
+import { getUserData, signIn } from '../../api/api'
 import { validateLogin, validatePassword } from '../../utils/validators'
+import { storeUserData } from '../../utils/storeUserData'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
@@ -48,6 +49,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const response = await signIn(data)
 
       if (response === 'OK') {
+        const userData = await getUserData()
+        storeUserData(userData)
         onLogin()
         navigate('/')
       } else if (typeof response === 'object' && response.reason) {
