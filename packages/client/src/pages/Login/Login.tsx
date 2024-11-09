@@ -48,9 +48,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const data: SignInRequest = { login, password }
       const response = await signIn(data)
 
-      if (response === 'OK') {
+      if (!response.reason) {
         const userData = await getUserData()
-        console.log('🚀 ~ handleSubmit ~ userData:', userData)
         storeUserData(userData)
         onLogin()
         navigate('/')

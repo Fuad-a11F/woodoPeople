@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
+import { AuthRoutes } from './routes'
 
-import AuthRoutes from './pages/Login/AuthRoutes'
+// import AuthRoutes from './pages/Login/AuthRoutes'
 
 function App() {
   useEffect(() => {
