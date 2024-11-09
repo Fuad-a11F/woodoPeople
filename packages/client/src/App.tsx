@@ -1,25 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from './components/ErrorBoundary'
-
-import {
-  Forum,
-  ForumTopic,
-  Game,
-  Leaderboard,
-  Login,
-  Main,
-  Profile,
-  Registration,
-  NotFound,
-} from './pages'
 
 import { Menu } from './components'
 import './App.css'
@@ -51,10 +32,15 @@ function App() {
     setIsAuthenticated(true)
   }
 
+  const handleLogout = () => {
+    sessionStorage.clear()
+    setIsAuthenticated(false)
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
-        {isAuthenticated && <Menu />}
+        {isAuthenticated && <Menu onLogout={handleLogout} />}
         <ErrorBoundary>
           <AuthRoutes isAuthenticated={isAuthenticated} onLogin={handleLogin} />
         </ErrorBoundary>

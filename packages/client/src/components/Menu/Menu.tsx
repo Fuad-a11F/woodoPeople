@@ -12,7 +12,8 @@ import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import GamesIcon from '@mui/icons-material/Games'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../../api/api'
 
 const pages: { [key: string]: string } = {
   Main: '/',
@@ -25,11 +26,12 @@ const settings: { [key: string]: string } = {
   Logout: 'login',
 }
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   )
+  const navigate = useNavigate()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -44,6 +46,12 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    onLogout()
+    navigate('/login')
   }
 
   return (
@@ -158,7 +166,9 @@ function ResponsiveAppBar() {
               {Object.keys(settings).map(setting => (
                 <MenuItem
                   key={setting}
-                  onClick={handleCloseUserMenu}
+                  onClick={
+                    setting === 'Logout' ? handleLogout : handleCloseUserMenu
+                  }
                   component={Link}
                   to={settings[setting]}>
                   <Typography sx={{ textAlign: 'center' }}>
