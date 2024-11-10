@@ -50,18 +50,19 @@ const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
       onClose={handleClose}
       hideBackdrop={false}
       disableEscapeKeyDown={true}>
-      <Card sx={{ p: 6, background: '#572c0e', width: 320 }}>
+      <Card sx={{ p: 6, width: 480 }}>
         <DialogTitle sx={{ textAlign: 'center', color: 'white', fontSize: 26 }}>
           NO SPACE LEFT!
         </DialogTitle>
 
         <DialogContent>
           <Card
-            sx={{ mt: 4, mb: 8, p: 4, background: '#924d1b', color: 'white' }}>
+            sx={{ mt: 4, mb: 8, p: 4, background: 'black', color: 'white' }}>
             <Stack
               direction="row"
               spacing={2}
               justifyContent={'space-between'}
+              textAlign={'center'}
               padding={'0 20px'}>
               <Box>
                 <Typography mb={1} fontSize={22} fontWeight={700}>
@@ -86,11 +87,15 @@ const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
           sx={{
             flexDirection: 'column',
           }}>
-          <Box display={'flex'} flexDirection={'column'} gap={5}>
-            <Button variant="contained" onClick={resetGame}>
+          <Box display={'flex'} flexDirection={'row'} gap={5}>
+            <Button size="large" variant="contained" onClick={resetGame}>
               Reset game
             </Button>
-            <Button sx={{ ml: 0 }} variant="contained" onClick={backToMenu}>
+            <Button
+              size="large"
+              sx={{ ml: 0 }}
+              variant="outlined"
+              onClick={backToMenu}>
               Back to menu
             </Button>
           </Box>

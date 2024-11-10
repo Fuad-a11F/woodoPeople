@@ -12,4 +12,6 @@ export interface Shape {
   initialY?: number
   blocks: { x: number; y: number }[]
   isDragging: boolean
+  color: string
+  strokeColor: string
 }

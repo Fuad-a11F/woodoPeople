@@ -51,11 +51,16 @@ const Main: React.FC = () => {
               </Typography>
             </Typography>
 
-            <Typography variant="subtitle1" gutterBottom>
-              Woodoku is a free mobile puzzle video game that can be played with
-              both blocks and grids. This unusual puzzle app developed by
-              Tripledot Studios Limited is essentially a wooden block game
-              combined with a Sudoku grid, as its unique name suggests.
+            <Typography variant="body1" gutterBottom>
+              Woodoku — это игра на внимательность и стратегию, сочиняющая в
+              себе элементы логики и пространственного мышления. Цель игры
+              заключается в заполнении игрового поля фигурами так, чтобы они
+              полностью заполнили строки или столбцы и исчезли. Когда вся строка
+              или столбец заполняются фигурами, они исчезают, освобождая место
+              для новых фигур. Это освобождает место для других фигур и
+              позволяет продвигаться в игре. Игра заканчивается, когда на поле
+              больше не остаётся места для размещения новых фигур, а игрок не
+              может выполнить ни одного хода.
             </Typography>
 
             <Box mt={4} display={'flex'} flexDirection={'column'} gap={2}>
