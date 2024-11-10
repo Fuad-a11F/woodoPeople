@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -14,7 +14,8 @@ import MenuItem from '@mui/material/MenuItem'
 import GamesIcon from '@mui/icons-material/Games'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../api/api'
-import { useAppSelector } from '../../store/hooks'
+import { useAppSelector, useAppDispatch } from '../../store/hooks'
+import { fetchUserData } from '../../store/reducers/userSlice'
 
 const pages: { [key: string]: string } = {
   Main: '/',
@@ -35,6 +36,11 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
     null
   )
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchUserData())
+  }, [dispatch])
 
   const user = useAppSelector(state => state.user.data)
 
