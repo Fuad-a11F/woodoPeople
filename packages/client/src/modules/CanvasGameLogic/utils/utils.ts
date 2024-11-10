@@ -1,6 +1,6 @@
-import { gridSize, tileSize } from './consts'
+import { gridSize, tileSize } from '../consts'
 
-import { Shape } from '../../interfaces'
+import { Shape } from '../../../interfaces'
 
 // Todo: надо доработать
 export const isThereSpaceForNewShape = (shapes: Shape[]): boolean => {

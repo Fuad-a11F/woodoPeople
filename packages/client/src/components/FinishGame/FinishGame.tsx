@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 
-import { getRandomElements } from '../../modules/CanvasGameLogic/mockDate'
+import { getRandomElements } from '../../modules/CanvasGameLogic/getRandomElements'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { annulPoint, toggleIsFinishGame } from '../../store/reducers/gameSlice'
