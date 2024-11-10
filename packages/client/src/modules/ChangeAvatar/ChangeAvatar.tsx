@@ -8,6 +8,8 @@ import {
   Typography,
 } from '@mui/material'
 import { saveAvatar } from '../../api/api'
+import { useAppDispatch } from '../../store/hooks'
+import { setUser } from '../../store/reducers/userSlice'
 
 interface ChangeAvatarProps {
   onAvatarSave: (avatar: string) => void
@@ -19,6 +21,8 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ onAvatarSave }) => {
   const [error, setError] = useState<string | null>(null)
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const dispatch = useAppDispatch()
 
   const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -42,6 +46,7 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ onAvatarSave }) => {
           setError(response.reason)
         }
         if (response.avatar) {
+          dispatch(setUser(response))
           onAvatarSave(response.avatar)
           handleDialogClose()
         }

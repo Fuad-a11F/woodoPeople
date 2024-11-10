@@ -15,9 +15,12 @@ import {
   validatePhone,
   validateSecondName,
 } from '../../utils/validators'
-import { ChangeInformationProps, IChangeInformationError } from './types'
+import { ChangeInformationProps } from './types'
 import { saveUserData } from '../../api/api'
 import Typography from '@mui/material/Typography'
+import { useAppDispatch } from '../../store/hooks'
+import { setUser } from '../../store/reducers/userSlice'
+import { IValidationErrors } from '../../interfaces/errors.interface'
 
 const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
   first_name,
@@ -26,6 +29,8 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
   phone,
   onUserInformationSave,
 }) => {
+  const dispatch = useAppDispatch()
+
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
 
   const [formData, setFormData] = useState<ChangeUserInformationRequest>({
@@ -37,7 +42,7 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
 
   const [error, setError] = useState<string | null>(null)
 
-  const [fieldErrors, setFieldErrors] = useState<IChangeInformationError>({
+  const [fieldErrors, setFieldErrors] = useState<IValidationErrors>({
     first_name: '',
     second_name: '',
     email: '',
@@ -67,7 +72,7 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
     e.preventDefault()
     setError(null)
 
-    const validationErrors: any = {}
+    const validationErrors: IValidationErrors = {}
     validationErrors.first_name = validateFirstName(formData.first_name)
     validationErrors.second_name = validateSecondName(formData.second_name)
     validationErrors.email = validateEmail(formData.email)
@@ -90,6 +95,7 @@ const ChangeUserInformation: React.FC<ChangeInformationProps> = ({
       } else {
         setIsEditDialogOpen(false)
         onUserInformationSave(response)
+        dispatch(setUser(response))
       }
     } catch (err) {
       setError('Ошибка при регистрации. Пожалуйста, попробуйте снова.')

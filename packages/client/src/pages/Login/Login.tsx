@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'

@@ -2,6 +2,9 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { render, screen, act } from '@testing-library/react'
 
+import { Provider } from 'react-redux'
+import store from './store/store'
+
 const appContent = 'Авторизация'
 
 // @ts-ignore
@@ -12,9 +15,11 @@ global.fetch = jest.fn(() =>
 test('Example test', async () => {
   await act(async () => {
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     )
   })
 

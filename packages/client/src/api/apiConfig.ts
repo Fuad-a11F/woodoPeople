@@ -1,4 +1,5 @@
-type JsonObject = Record<string, any>
+import { JsonObject } from '../interfaces/json.interface'
+
 type RequestBody = JsonObject | FormData
 
 type RequestConfig = {
