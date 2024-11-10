@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import {
+  Box,
+  Button,
   Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Stack,
-  Button,
-  Box,
   Typography,
 } from '@mui/material'
 
-const FinishGame: React.FC = () => {
-  const [open, setOpen] = useState(true)
+import { FinishGameInterface } from '../../interfaces'
+
+const FinishGame: React.FC<FinishGameInterface> = ({ open, setOpen }) => {
   const navigate = useNavigate()
 
   const handleClose = (_: unknown, reason: string) => {
