@@ -74,7 +74,6 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -84,7 +83,9 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
               color: 'inherit',
               textDecoration: 'none',
             }}>
-            WOODOKU
+            <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
+              WOODOKU
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -128,7 +129,6 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -139,7 +139,9 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
               color: 'inherit',
               textDecoration: 'none',
             }}>
-            WOODOKU
+            <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
+              WOODOKU
+            </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {Object.keys(pages).map(page => (

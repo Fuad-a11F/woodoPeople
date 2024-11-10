@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 
 export interface CanvasGameLogicInterface {
-  setPoint: Dispatch<SetStateAction<number>>
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setShapes: Dispatch<SetStateAction<Shape[]>>
+  shapes: Shape[]
 }
 
 export interface Shape {

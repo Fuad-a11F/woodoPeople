@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
+import { Shape } from './canvasGameLogic.interface'
 
 export interface FinishGameInterface {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setShapes: Dispatch<SetStateAction<Shape[]>>
 }

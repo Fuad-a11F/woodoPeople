@@ -13,25 +13,40 @@ import {
   Typography,
 } from '@mui/material'
 
+import { getRandomElements } from '../../modules/CanvasGameLogic/mockDate'
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { annulPoint, toggleIsFinishGame } from '../../store/reducers/gameSlice'
+import { selectIsFinishGame } from '../../store/selectors/gameSelectors'
+
 import { FinishGameInterface } from '../../interfaces'
 
-const FinishGame: React.FC<FinishGameInterface> = ({ open, setOpen }) => {
+const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const isOpenFinish = useAppSelector(selectIsFinishGame)
 
   const handleClose = (_: unknown, reason: string) => {
     if (reason !== 'backdropClick') {
-      setOpen(false)
+      dispatch(toggleIsFinishGame())
     }
   }
 
   const backToMenu = () => {
-    setOpen(false)
+    dispatch(toggleIsFinishGame())
     navigate('/')
+  }
+
+  const resetGame = () => {
+    dispatch(annulPoint())
+    setShapes(getRandomElements())
+    handleClose(null, 'Reset game')
   }
 
   return (
     <Dialog
-      open={open}
+      open={isOpenFinish}
       onClose={handleClose}
       hideBackdrop={false}
       disableEscapeKeyDown={true}>
@@ -72,7 +87,9 @@ const FinishGame: React.FC<FinishGameInterface> = ({ open, setOpen }) => {
             flexDirection: 'column',
           }}>
           <Box display={'flex'} flexDirection={'column'} gap={5}>
-            <Button variant="contained">Reset game</Button>
+            <Button variant="contained" onClick={resetGame}>
+              Reset game
+            </Button>
             <Button sx={{ ml: 0 }} variant="contained" onClick={backToMenu}>
               Back to menu
             </Button>

@@ -4,22 +4,27 @@ import { Container } from '@mui/material'
 
 import { FinishGame } from '../../components/FinishGame'
 import { GamePoint } from '../../components/GamePoint'
+import { StartGame } from '../../components'
 
 import { CanvasGameLogic } from '../../modules'
 
+import { Shape } from '../../interfaces'
+import { getRandomElements } from '../../modules/CanvasGameLogic/mockDate'
+
 const Game: React.FC = () => {
-  const [point, setPoint] = useState(0)
-  const [open, setOpen] = useState(false)
+  const [shapes, setShapes] = useState<Shape[]>([...getRandomElements()])
 
   return (
     <Typography variant="h2" gutterBottom>
       <Container maxWidth={'md'}>
-        <GamePoint point={point} />
+        <GamePoint />
 
-        <CanvasGameLogic setPoint={setPoint} setOpen={setOpen} />
+        <CanvasGameLogic shapes={shapes} setShapes={setShapes} />
       </Container>
 
-      <FinishGame open={open} setOpen={setOpen} />
+      <FinishGame setShapes={setShapes} />
+
+      <StartGame />
     </Typography>
   )
 }

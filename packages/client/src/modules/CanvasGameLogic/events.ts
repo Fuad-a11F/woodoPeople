@@ -109,8 +109,8 @@ export const handleMouseUp = (
   shapes: Shape[],
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
   setOpen: Dispatch<SetStateAction<boolean>>,
-  setShapes: Dispatch<SetStateAction<Shape[]>>,
-  setPoint: Dispatch<SetStateAction<number>>
+  setShapes: (newShapes: Shape[]) => void,
+  setPointGame: (point: number) => void
 ) => {
   const canvas = canvasRef?.current
   if (!canvas) return
@@ -139,7 +139,7 @@ export const handleMouseUp = (
       selectedShape.y = selectedShape.initialY!
     }
 
-    removeIfPartFull(shapes, setPoint)
+    removeIfPartFull(shapes, setPointGame)
 
     selectedShape.isDragging = false
     selectedShape = null
@@ -149,7 +149,7 @@ export const handleMouseUp = (
 
     if (areShapesInPanel(shapes)) {
       const newShapes = [...getRandomElements()]
-      setShapes(prev => [...prev, ...newShapes])
+      setShapes([...shapes, ...newShapes])
 
       if (!isThereSpaceForNewShape([...shapes, ...newShapes])) {
         setOpen(true)
