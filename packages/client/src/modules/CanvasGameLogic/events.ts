@@ -7,9 +7,9 @@ import {
   isShapeInsidePlayArea,
   isThereSpaceForNewShape,
   removeIfPartFull,
-} from './utils'
+} from './utils/utils'
 
-import { getRandomElements } from './mockDate'
+import { getRandomElements } from './getRandomElements'
 import { gridSize, tileSize } from './consts'
 
 import { Shape } from '../../interfaces'

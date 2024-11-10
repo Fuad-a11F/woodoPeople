@@ -9,7 +9,7 @@ import { StartGame } from '../../components'
 import { CanvasGameLogic } from '../../modules'
 
 import { Shape } from '../../interfaces'
-import { getRandomElements } from '../../modules/CanvasGameLogic/mockDate'
+import { getRandomElements } from '../../modules/CanvasGameLogic/getRandomElements'
 
 const Game: React.FC = () => {
   const [shapes, setShapes] = useState<Shape[]>([...getRandomElements()])
