@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import Box from '@mui/material/Box'
 
-import { getRandomElements } from './mockDate'
+import { useAppDispatch } from '../../store/hooks'
+import { setPoint, toggleIsFinishGame } from '../../store/reducers/gameSlice'
 
 import { canvasWidth, gridSize, tileSize } from './consts'
 
@@ -13,15 +14,22 @@ import {
   handleMouseUp,
 } from './events'
 
-import { CanvasGameLogicInterface, Shape } from '../../interfaces'
+import { CanvasGameLogicInterface } from '../../interfaces'
 
 const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
-  setPoint,
-  setOpen,
+  shapes,
+  setShapes,
 }) => {
-  const [shapes, setShapes] = useState<Shape[]>([...getRandomElements()])
+  const dispatch = useAppDispatch()
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  const setOpen = () => {
+    dispatch(toggleIsFinishGame())
+  }
+  const setPointGame = (point: number) => {
+    dispatch(setPoint(point))
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -44,7 +52,7 @@ const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
         style={{ border: '1px solid black' }}
         onMouseDown={e => handleMouseDown(e, shapes)}
         onMouseUp={() =>
-          handleMouseUp(shapes, canvasRef, setOpen, setShapes, setPoint)
+          handleMouseUp(shapes, canvasRef, setOpen, setShapes, setPointGame)
         }
         onMouseLeave={() => handleMouseLeave(shapes, canvasRef)}
         onMouseMove={e => handleMouseMove(e, shapes, canvasRef)}

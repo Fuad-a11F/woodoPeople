@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import { gridSize, tileSize } from './consts'
 
 import { Shape } from '../../interfaces'
@@ -147,14 +145,14 @@ export const areShapesInPanel = (shapes: Shape[]): boolean => {
 
 export const removeIfPartFull = (
   shapes: Shape[],
-  setPoint: Dispatch<SetStateAction<number>>
+  setPointGame: (point: number) => void
 ) => {
   let rowFilled = isAnyRowFilled(shapes)
   let columnFilled = isAnyColumnFilled(shapes)
 
   while (rowFilled) {
     if (rowFilled && typeof rowFilled !== 'boolean') {
-      setPoint(prev => prev + 20)
+      setPointGame(20)
       removePartOfBlockOnFilledRow(rowFilled.y, shapes)
     }
 
@@ -163,7 +161,7 @@ export const removeIfPartFull = (
 
   while (columnFilled) {
     if (columnFilled && typeof columnFilled !== 'boolean') {
-      setPoint(prev => prev + 20)
+      setPointGame(20)
       removePartOfBlockOnFilledColumn(columnFilled.x, shapes)
     }
 
