@@ -25,7 +25,7 @@ export const renderShapes = (
     shape.blocks.forEach(block => {
       const x = (shape.x + block.x) * tileSize
       const y = (shape.y + block.y) * tileSize
-      ctx.fillStyle = 'blue'
+      ctx.fillStyle = '#1976d2'
       ctx.fillRect(x, y, tileSize, tileSize)
       ctx.strokeRect(x, y, tileSize, tileSize)
     })
