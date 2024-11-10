@@ -1,6 +1,6 @@
 import { tileSize } from './consts'
 import { Shape } from '../../interfaces'
-import { drawRoundedRect } from './utils'
+import { drawRoundedRect } from './utils/utils'
 
 export const drawGrid = (
   ctx: CanvasRenderingContext2D,
@@ -44,8 +44,8 @@ export const renderShapes = (
         tileSize,
         tileSize,
         5,
-        shape.color,
-        shape.strokeColor,
+        shape.color || '#FF6EC7',
+        shape.strokeColor || '#B81C6D',
         shape.isDragging
       )
     })
