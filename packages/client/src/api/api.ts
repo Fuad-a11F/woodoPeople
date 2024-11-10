@@ -56,3 +56,10 @@ export const saveUserPassword = (
     data,
   })
 }
+
+export const logout = async (): Promise<void> => {
+  await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+}

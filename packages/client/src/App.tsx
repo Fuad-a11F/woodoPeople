@@ -1,26 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import React, { useEffect } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
-
-import {
-  Forum,
-  ForumTopic,
-  Game,
-  Leaderboard,
-  Login,
-  Main,
-  Profile,
-  Registration,
-  NotFound,
-} from './pages'
-
-import { Menu } from './components'
-
 import './App.css'
+import { AuthRoutes } from './routes'
+
+// import AuthRoutes from './pages/Login/AuthRoutes'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -32,63 +17,11 @@ function App() {
     fetchServerData()
   }, [])
 
-  const handleLogin = () => {
-    setIsAuthenticated(true)
-  }
-
-  const sampleData = [
-    { id: 1, name: 'Alice', score: 1200 },
-    { id: 2, name: 'Bob', score: 950 },
-    { id: 3, name: 'Charlie', score: 1100 },
-  ]
-
   return (
     <div className="App">
-      <BrowserRouter>
-        {isAuthenticated && <Menu />}
-        <ErrorBoundary>
-          <Routes>
-            <Route
-              path="/"
-              element={isAuthenticated ? <Main /> : <Navigate to="/login" />}
-            />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route
-              path="/forum"
-              element={isAuthenticated ? <Forum /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/forum-topic"
-              element={
-                isAuthenticated ? <ForumTopic /> : <Navigate to="/login" />
-              }
-            />
-            <Route
-              path="/game"
-              element={isAuthenticated ? <Game /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/leaderboard"
-              element={
-                isAuthenticated ? (
-                  <Leaderboard data={sampleData} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/profile"
-              element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/registration"
-              element={<Registration onRegister={handleLogin} />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ErrorBoundary>
-      </BrowserRouter>
+      <ErrorBoundary>
+        <AuthRoutes />
+      </ErrorBoundary>
     </div>
   )
 }
