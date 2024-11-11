@@ -21,6 +21,7 @@ const RESOURCES_URL = 'https://ya-praktikum.tech/api/v2/resources/'
 const UserProfile: React.FC = () => {
   const [avatar, setAvatar] = useState<string | null>(null)
   const [userData, setUserData] = useState<UserResponse | null>(null)
+  const [location, setLocation] = useState<GeolocationPosition | null>(null)
 
   const fetchUserData = async () => {
     const data = await getUserData()
@@ -28,8 +29,24 @@ const UserProfile: React.FC = () => {
     setAvatar(`${RESOURCES_URL}${data.avatar}`)
   }
 
+  const fetchLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setLocation(position)
+        },
+        error => {
+          console.error('Не получилось получить геопозицию.', error)
+        }
+      )
+    } else {
+      console.error('Не получилось получить геопозицию.')
+    }
+  }
+
   useEffect(() => {
     fetchUserData()
+    fetchLocation()
   }, [])
 
   return (
@@ -62,7 +79,12 @@ const UserProfile: React.FC = () => {
           <Typography variant="subtitle1">
             Телефон: {userData?.phone}
           </Typography>
-
+          {location && (
+            <Typography variant="subtitle1">
+              Местоположение: {location.coords.latitude},{' '}
+              {location.coords.longitude}
+            </Typography>
+          )}
           {userData ? (
             <ChangeUserInformation
               onUserInformationSave={newData =>
