@@ -67,12 +67,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   return (
     <Box display="flex" height="100vh">
-      <Box
-        flex={1}
-        bgcolor="#f5f5f5"
-        display="flex"
-        justifyContent="center"
-        alignItems="center">
+      <Box flex={1} display="flex" justifyContent="center" alignItems="center">
         <img
           src="/woodoku.jpg"
           alt="Login Illustration"
