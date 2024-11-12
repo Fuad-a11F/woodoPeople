@@ -36,14 +36,17 @@ const StartGame: React.FC = () => {
       onClose={handleClose}
       hideBackdrop={false}
       disableEscapeKeyDown={true}>
-      <Card sx={{ p: 6, background: '#572c0e', width: 320 }}>
+      <Card sx={{ p: 6, width: 480 }}>
         <DialogContent
           sx={{
             color: 'white',
           }}>
           <Box>
-            <Typography mb={1} fontSize={22} fontWeight={700}>
-              Are you ready to start?
+            <Typography mb={1} variant="body1">
+              Размещайте фигуры на игровом поле. Когда вся строка или столбец
+              заполняются фигурами, они исчезают, освобождая место для новых
+              фигур. Игра продолжается, пока на поле не останется места для
+              размещения новых фигур.
             </Typography>
           </Box>
         </DialogContent>
@@ -52,14 +55,19 @@ const StartGame: React.FC = () => {
           sx={{
             flexDirection: 'column',
           }}>
-          <Box display={'flex'} gap={5}>
+          <Box display={'flex'} gap={10}>
             <Button
+              size="large"
               variant="contained"
               onClick={() => handleClose(null, 'Start game')}>
               Start
             </Button>
 
-            <Button sx={{ ml: 0 }} variant="contained" onClick={backToMenu}>
+            <Button
+              size="large"
+              sx={{ ml: 0 }}
+              variant="outlined"
+              onClick={backToMenu}>
               Back to menu
             </Button>
           </Box>

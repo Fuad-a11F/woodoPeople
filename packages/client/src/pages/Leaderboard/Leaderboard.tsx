@@ -48,8 +48,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
                 <TableRow
                   key={item.id}
                   sx={{
-                    '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' },
-                    '&:hover': { backgroundColor: '#e0f7fa' },
+                    '&:nth-of-type(odd)': { backgroundColor: '#121212' },
+                    '&:hover': {
+                      backgroundColor: 'rgba(144, 202, 249, 0.08);',
+                    },
                   }}>
                   <TableCell align="left">{index + 1}</TableCell>
                   <TableCell>{item.name}</TableCell>

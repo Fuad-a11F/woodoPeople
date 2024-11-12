@@ -1,5 +1,6 @@
 import { tileSize } from './consts'
 import { Shape } from '../../interfaces'
+import { drawRoundedRect } from './utils/utils'
 
 export const drawGrid = (
   ctx: CanvasRenderingContext2D,
@@ -7,10 +8,21 @@ export const drawGrid = (
 ) => {
   if (!ctx || !canvas) return
 
+  ctx.strokeStyle = '#EFF7F6'
+
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      ctx.strokeRect(i * tileSize, j * tileSize, tileSize, tileSize)
+      drawRoundedRect(
+        ctx,
+        i * tileSize,
+        j * tileSize,
+        tileSize,
+        tileSize,
+        5,
+        '#132436',
+        '#160923'
+      )
     }
   }
 }
@@ -25,9 +37,17 @@ export const renderShapes = (
     shape.blocks.forEach(block => {
       const x = (shape.x + block.x) * tileSize
       const y = (shape.y + block.y) * tileSize
-      ctx.fillStyle = '#1976d2'
-      ctx.fillRect(x, y, tileSize, tileSize)
-      ctx.strokeRect(x, y, tileSize, tileSize)
+      drawRoundedRect(
+        ctx,
+        x,
+        y,
+        tileSize,
+        tileSize,
+        5,
+        shape.color || '#FF6EC7',
+        shape.strokeColor || '#B81C6D',
+        shape.isDragging
+      )
     })
   })
 }

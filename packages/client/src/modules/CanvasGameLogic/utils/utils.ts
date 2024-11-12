@@ -199,3 +199,53 @@ export const isShapeCollidingWithOtherShapes = (
     })
   })
 }
+
+export const drawRoundedRect = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number | { tl: number; tr: number; br: number; bl: number },
+  color: string,
+  strokeColor: string,
+  isDragging?: boolean
+) => {
+  ctx.fillStyle = color
+  ctx.strokeStyle = strokeColor
+  ctx.lineWidth = 1
+
+  if (isDragging) {
+    ctx.strokeStyle = '#582FF5'
+  }
+
+  ctx.beginPath()
+
+  // Если `radius` - число, задаем одинаковое скругление для всех углов
+  if (typeof radius === 'number') {
+    radius = { tl: radius, tr: radius, br: radius, bl: radius }
+  } else {
+    // Убедитесь, что у каждого угла есть значение
+    radius = {
+      tl: radius.tl || 0,
+      tr: radius.tr || 0,
+      br: radius.br || 0,
+      bl: radius.bl || 0,
+    }
+  }
+
+  // Рисуем путь скругленного прямоугольника
+  ctx.moveTo(x + radius.tl, y)
+  ctx.lineTo(x + width - radius.tr, y)
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr)
+  ctx.lineTo(x + width, y + height - radius.br)
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height)
+  ctx.lineTo(x + radius.bl, y + height)
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl)
+  ctx.lineTo(x, y + radius.tl)
+  ctx.quadraticCurveTo(x, y, x + radius.tl, y)
+
+  ctx.closePath()
+  ctx.fill() // Заливаем прямоугольник
+  ctx.stroke() // Используйте stroke(), если нужен только контур
+}

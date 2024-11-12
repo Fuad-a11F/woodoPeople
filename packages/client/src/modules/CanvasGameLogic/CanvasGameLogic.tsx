@@ -49,7 +49,6 @@ const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
     <Box display={'flex'} justifyContent="center" margin={'26px 0 0 0'}>
       <canvas
         ref={canvasRef}
-        style={{ border: '1px solid black' }}
         onMouseDown={e => handleMouseDown(e, shapes)}
         onMouseUp={() =>
           handleMouseUp(shapes, canvasRef, setOpen, setShapes, setPointGame)

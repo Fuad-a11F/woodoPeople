@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import './App.css'
 import { AuthRoutes } from './routes'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
+  const theme = useMemo(
+    () =>
+      createTheme({
+        colorSchemes: {
+          dark: true,
+        },
+      }),
+    []
+  )
+
   return (
     <div className="App">
       <ErrorBoundary>
-        <AuthRoutes />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AuthRoutes />
+        </ThemeProvider>
       </ErrorBoundary>
     </div>
   )
