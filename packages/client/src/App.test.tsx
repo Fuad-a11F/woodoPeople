@@ -1,11 +1,12 @@
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { render, screen, act } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import { Provider } from 'react-redux'
+import { act } from 'react'
 import store from './store/store'
 
-const appContent = 'Авторизация'
+const appContent = 'Hello world'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
