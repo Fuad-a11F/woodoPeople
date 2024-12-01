@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useRef } from 'react'
 import Box from '@mui/material/Box'
 
-import { useAppDispatch } from '../../store/hooks'
+import { selectGamePoint } from '../../store/selectors/gameSelectors'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { setPoint, toggleIsFinishGame } from '../../store/reducers/gameSlice'
+import { getUserData } from '../../api/api'
+import { saveLeaderboard } from '../../api/leaderboardApi'
 
 import { canvasWidth, gridSize, tileSize } from './consts'
 
@@ -13,6 +16,7 @@ import {
   handleMouseMove,
   handleMouseUp,
 } from './events'
+import { isThereSpaceForNewShape } from './utils/utils'
 
 import { CanvasGameLogicInterface } from '../../interfaces'
 
@@ -21,7 +25,7 @@ const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
   setShapes,
 }) => {
   const dispatch = useAppDispatch()
-
+  const point = useAppSelector(selectGamePoint)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   const setOpen = () => {
@@ -29,6 +33,25 @@ const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
   }
   const setPointGame = (point: number) => {
     dispatch(setPoint(point))
+  }
+
+  const handlerMouseUp = async () => {
+    handleMouseUp(shapes, canvasRef, setShapes, setPointGame)
+
+    if (!isThereSpaceForNewShape(shapes)) {
+      const data = await getUserData()
+
+      await saveLeaderboard({
+        data: {
+          name: data.first_name,
+          WoodoPeopleTeam: point,
+        },
+        ratingFieldName: 'WoodoPeopleTeam',
+        teamName: 'WoodoPeopleTeam',
+      })
+
+      setOpen()
+    }
   }
 
   useEffect(() => {
@@ -50,9 +73,7 @@ const CanvasGameLogic: FC<CanvasGameLogicInterface> = ({
       <canvas
         ref={canvasRef}
         onMouseDown={e => handleMouseDown(e, shapes)}
-        onMouseUp={() =>
-          handleMouseUp(shapes, canvasRef, setOpen, setShapes, setPointGame)
-        }
+        onMouseUp={handlerMouseUp}
         onMouseLeave={() => handleMouseLeave(shapes, canvasRef)}
         onMouseMove={e => handleMouseMove(e, shapes, canvasRef)}
       />

@@ -8,8 +8,7 @@ import {
   SignUpResponse,
   UserResponse,
 } from './types'
-
-const API_URL = 'https://ya-praktikum.tech/api/v2'
+import { API_URL } from './const'
 
 export const signIn = (data: SignInRequest): Promise<SignInResponse> => {
   return fetchWithConfig<SignInResponse>(`${API_URL}/auth/signin`, {
