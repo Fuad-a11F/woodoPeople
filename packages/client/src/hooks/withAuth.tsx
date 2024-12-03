@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import useAuthCheck from './useAuthCheck'
 import { Box, CircularProgress } from '@mui/material'
 
-const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
+const withAuth = <P extends object>(
+  Component: React.ComponentType<P>,
+  auth: boolean,
+  loading: boolean
+) => {
   return (props: P) => {
-    const { auth, loading } = useAuthCheck()
-
     if (loading) {
       return (
         <Box

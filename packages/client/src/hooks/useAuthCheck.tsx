@@ -7,7 +7,6 @@ const useAuthCheck = () => {
 
   useEffect(() => {
     const checkUser = async () => {
-      setLoading(true)
       try {
         const userData = await getUserData()
         if (userData) {

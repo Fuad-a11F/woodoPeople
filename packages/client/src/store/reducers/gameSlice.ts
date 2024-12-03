@@ -11,8 +11,11 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    toggleIsStartGame: state => {
-      state.isStartGame = !state.isStartGame
+    isStartGameTrue: state => {
+      state.isStartGame = true
+    },
+    isStartGameFalse: state => {
+      state.isStartGame = false
     },
     toggleIsFinishGame: state => {
       state.isFinishGame = !state.isFinishGame
@@ -30,7 +33,8 @@ const gameSlice = createSlice({
 })
 
 export const {
-  toggleIsStartGame,
+  isStartGameTrue,
+  isStartGameFalse,
   toggleIsFinishGame,
   annulPoint,
   setShapes,
