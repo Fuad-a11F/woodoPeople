@@ -62,7 +62,7 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
   const handleLogout = async () => {
     await logout()
     onLogout()
-    navigate('/login')
+    navigate('') // вот тут поменял navigate('/login')
   }
 
   return (

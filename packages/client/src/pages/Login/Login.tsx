@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
@@ -57,6 +57,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         setError(response.reason)
       }
     } catch (err) {
+      console.error('Ошибка при авторизации:', err)
       setError('Ошибка авторизации. Проверьте логин и пароль.')
     }
   }
@@ -64,6 +65,107 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleRegistrationClick = () => {
     navigate('/registration')
   }
+
+  const handleYandexLogin = async () => {
+    try {
+      const redirectUri = 'http://localhost:3000'
+      const serviceId = await getServiceId(redirectUri)
+
+      console.log('Получен serviceId:', serviceId)
+
+      const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}`
+      console.log('Перенаправляем на URL авторизации Яндекса:', authUrl)
+
+      window.location.href = authUrl
+    } catch (err) {
+      console.error('Ошибка при авторизации через Яндекс:', err)
+      setError('Не удалось начать авторизацию через Яндекс.')
+    }
+  }
+
+  const getServiceId = async (redirectUri: string): Promise<string> => {
+    console.log('Запрашиваем service_id с redirect_uri:', redirectUri)
+    const response = await fetch(
+      `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}`
+    )
+
+    if (!response.ok) {
+      throw new Error('Ошибка при получении service_id')
+    }
+
+    const data = await response.json()
+    console.log('Ответ от сервера при получении service_id:', data)
+
+    return data.service_id
+  }
+
+  const handleOAuthCode = async (code: string) => {
+    try {
+      const redirectUri = 'http://localhost:3000'
+      const data = { code, redirect_uri: redirectUri }
+
+      console.log('Отправляем POST-запрос на /oauth/yandex с данными:', data)
+
+      const response = await fetch(
+        'https://ya-praktikum.tech/api/v2/oauth/yandex',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(data),
+        }
+      )
+
+      console.log('Статус ответа:', response.status)
+      console.log('Заголовки ответа:', response.headers)
+
+      const contentType = response.headers.get('Content-Type')
+      const responseData = contentType?.includes('application/json')
+        ? await response.json()
+        : await response.text()
+
+      console.log('Ответ от сервера при обмене кода на токен:', responseData)
+
+      if (!response.ok) {
+        throw new Error(
+          responseData.reason || 'Ошибка авторизации через Яндекс.'
+        )
+      }
+
+      console.log('Токен успешно получен. Загружаем данные пользователя...')
+      const userData = await getUserData()
+      console.log('Данные пользователя:', userData)
+
+      storeUserData(userData)
+      onLogin()
+      navigate('/')
+    } catch (err) {
+      console.error('Ошибка при обмене кода на токен:', err)
+      setError(
+        err instanceof Error ? err.message : 'Ошибка при обмене кода на токен.'
+      )
+    }
+  }
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const code = searchParams.get('code')
+
+    if (code) {
+      console.log('Код авторизации найден в URL:', code)
+      handleOAuthCode(code).then(() => {
+        window.history.replaceState({}, document.title, '')
+      })
+    } else {
+      console.log('Код авторизации отсутствует в URL.')
+    }
+  }, [])
 
   return (
     <Box display="flex" height="100vh">
@@ -125,6 +227,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               color="secondary"
               onClick={handleRegistrationClick}>
               Регистрация
+            </Button>
+          </Box>
+          <Box mt={2} textAlign="center">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleYandexLogin}>
+              Войти через Яндекс
             </Button>
           </Box>
         </Box>

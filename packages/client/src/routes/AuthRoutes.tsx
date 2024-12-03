@@ -14,6 +14,7 @@ import {
 } from '../pages'
 import { sampleData } from '../utils/sampleData'
 import { Menu } from '../components'
+import useAuth from '../utils/useAuth'
 
 const AuthRoutes = () => {
   const { auth, setAuth } = useAuthCheck()
@@ -35,16 +36,14 @@ const AuthRoutes = () => {
     <>
       {auth && <Menu onLogout={handleLogout} />}
       <Routes>
-        <Route path="/" element={<ProtectedMain />} />
+        {/* // Route path="/" element={<ProtectedMain  ---- было так  />} /> */}
+        <Route path="/main" element={<ProtectedMain />} />
         <Route path="/profile" element={<ProtectedProfile />} />
         <Route path="/forum" element={<ProtectedForum />} />
         <Route path="/forum-topic" element={<ProtectedForumTopic />} />
         <Route path="/game" element={<ProtectedGame />} />
         <Route path="/leaderboard" element={<ProtectedLeaderboard />} />
-        <Route
-          path="/login"
-          element={<Login onLogin={() => setAuth(true)} />}
-        />
+        <Route path="" element={<Login onLogin={() => setAuth(true)} />} />
         <Route
           path="/registration"
           element={<Registration onRegister={() => setAuth(true)} />}
@@ -54,5 +53,39 @@ const AuthRoutes = () => {
     </>
   )
 }
+
+// const AuthRoutes = () => {
+//   const { auth, setAuth } = useAuth();
+
+//   const handleLogout = () => {
+//     sessionStorage.clear();
+//     setAuth(false);
+//     window.location.reload();
+//   };
+
+//   const ProtectedMain = withAuth(Main);
+//   const ProtectedProfile = withAuth(Profile);
+//   const ProtectedForum = withAuth(Forum);
+//   const ProtectedForumTopic = withAuth(ForumTopic);
+//   const ProtectedGame = withAuth(Game);
+//   const ProtectedLeaderboard = withAuth(() => <Leaderboard data={sampleData} />);
+
+//   return (
+//     <>
+//       {auth && <Menu onLogout={handleLogout} />}
+//       <Routes>
+//         <Route path="/main" element={<ProtectedMain />} />
+//         <Route path="/profile" element={<ProtectedProfile />} />
+//         <Route path="/forum" element={<ProtectedForum />} />
+//         <Route path="/forum-topic" element={<ProtectedForumTopic />} />
+//         <Route path="/game" element={<ProtectedGame />} />
+//         <Route path="/leaderboard" element={<ProtectedLeaderboard />} />
+//         <Route path="/login" element={<Login onLogin={() => setAuth(true)} />} />
+//         <Route path="/registration" element={<Registration onRegister={() => setAuth(true)} />} />
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//     </>
+//   );
+// };
 
 export default AuthRoutes
