@@ -6,6 +6,11 @@ import { SignInRequest } from '../../api/types'
 import { getUserData, signIn } from '../../api/api'
 import { validateLogin, validatePassword } from '../../utils/validators'
 import { storeUserData } from '../../utils/storeUserData'
+import {
+  exchangeOAuthCodeForToken,
+  getServiceId,
+  YA_AUTH_URL,
+} from '../../api/authApi'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
@@ -65,15 +70,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleRegistrationClick = () => {
     navigate('/registration')
   }
-
   const handleYandexLogin = async () => {
     try {
-      const redirectUri = 'https://local.ya-praktikum.tech'
-      // const redirectUri = 'http://localhost:3000'
-      const serviceId = await getServiceId(redirectUri)
-
+      const serviceId = await getServiceId(YA_AUTH_URL)
       const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
-        redirectUri
+        YA_AUTH_URL
       )}`
       window.location.href = authUrl
     } catch (err) {
@@ -82,55 +83,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
   }
 
-  const getServiceId = async (redirectUri: string): Promise<string> => {
-    const response = await fetch(
-      `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
-        redirectUri
-      )}`,
-      {
-        credentials: 'include',
-      }
-    )
-
-    if (!response.ok) {
-      throw new Error('Ошибка при получении service_id')
-    }
-
-    const data = await response.json()
-    return data.service_id
-  }
-
   const handleOAuthCode = async (code: string) => {
     try {
-      const redirectUri = 'https://local.ya-praktikum.tech'
-      // const redirectUri = 'http://localhost:3000'
-      const data = { code, redirect_uri: redirectUri }
-
-      const response = await fetch(
-        'https://ya-praktikum.tech/api/v2/oauth/yandex',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        }
-      )
-
-      const contentType = response.headers.get('Content-Type')
-      const responseData = contentType?.includes('application/json')
-        ? await response.json()
-        : await response.text()
-
-      if (!response.ok) {
-        throw new Error(
-          responseData.reason || 'Ошибка авторизации через Яндекс.'
-        )
-      }
-
+      await exchangeOAuthCodeForToken(code)
       const userData = await getUserData()
-
       storeUserData(userData)
       onLogin()
       navigate('/main')

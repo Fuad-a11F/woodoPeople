@@ -23,7 +23,7 @@ const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
     }
 
     if (!auth) {
-      return <Navigate to="" replace /> // вот тут поменял return <Navigate to="/login" replace />
+      return <Navigate to="" replace />
     }
 
     return <Component {...props} />
