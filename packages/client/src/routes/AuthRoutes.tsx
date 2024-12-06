@@ -13,6 +13,7 @@ import {
   Registration,
 } from '../pages'
 import { Menu } from '../components'
+import useAuth from '../utils/useAuth'
 
 const AuthRoutes = () => {
   const { auth, setAuth, loading } = useAuthCheck()
@@ -34,16 +35,13 @@ const AuthRoutes = () => {
     <>
       {auth && <Menu onLogout={handleLogout} />}
       <Routes>
-        <Route path="/" element={<ProtectedMain />} />
+        <Route path="/main" element={<ProtectedMain />} />
         <Route path="/profile" element={<ProtectedProfile />} />
         <Route path="/forum" element={<ProtectedForum />} />
         <Route path="/forum-topic" element={<ProtectedForumTopic />} />
         <Route path="/game" element={<ProtectedGame />} />
         <Route path="/leaderboard" element={<ProtectedLeaderboard />} />
-        <Route
-          path="/login"
-          element={<Login onLogin={() => setAuth(true)} />}
-        />
+        <Route path="/" element={<Login onLogin={() => setAuth(true)} />} />
         <Route
           path="/registration"
           element={<Registration onRegister={() => setAuth(true)} />}
