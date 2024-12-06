@@ -27,7 +27,7 @@ const StartGame: React.FC = () => {
   }
 
   const backToMenu = () => {
-    navigate('/')
+    navigate('/main')
   }
 
   return (

@@ -35,7 +35,7 @@ const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
 
   const backToMenu = () => {
     dispatch(toggleIsFinishGame())
-    navigate('/')
+    navigate('/main')
   }
 
   const resetGame = () => {

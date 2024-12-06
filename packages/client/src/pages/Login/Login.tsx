@@ -68,7 +68,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleYandexLogin = async () => {
     try {
-      const redirectUri = 'http://localhost:3000'
+      const redirectUri = 'https://local.ya-praktikum.tech'
+      // const redirectUri = 'http://localhost:3000'
       const serviceId = await getServiceId(redirectUri)
 
       console.log('Получен serviceId:', serviceId)
@@ -90,7 +91,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const response = await fetch(
       `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
         redirectUri
-      )}`
+      )}`,
+      {
+        credentials: 'include',
+      }
     )
 
     if (!response.ok) {
@@ -105,7 +109,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleOAuthCode = async (code: string) => {
     try {
-      const redirectUri = 'http://localhost:3000'
+      const redirectUri = 'https://local.ya-praktikum.tech'
+      // const redirectUri = 'http://localhost:3000'
       const data = { code, redirect_uri: redirectUri }
 
       console.log('Отправляем POST-запрос на /oauth/yandex с данными:', data)
@@ -144,7 +149,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       storeUserData(userData)
       onLogin()
-      navigate('/')
+      navigate('/main')
     } catch (err) {
       console.error('Ошибка при обмене кода на токен:', err)
       setError(

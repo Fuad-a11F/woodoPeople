@@ -18,14 +18,14 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { fetchUserData } from '../../store/reducers/userSlice'
 
 const pages: { [key: string]: string } = {
-  Main: '/',
+  Main: 'main',
   Game: 'game',
   Forum: 'forum',
   Leaderboard: 'leaderboard',
 }
 const settings: { [key: string]: string } = {
   Profile: 'profile',
-  Logout: 'login',
+  Logout: '/',
 }
 
 const RESOURCES_URL = 'https://ya-praktikum.tech/api/v2/resources/'
@@ -62,7 +62,7 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
   const handleLogout = async () => {
     await logout()
     onLogout()
-    navigate('') // вот тут поменял navigate('/login')
+    navigate('/login')
   }
 
   return (
@@ -83,7 +83,9 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
               color: 'inherit',
               textDecoration: 'none',
             }}>
-            <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link
+              to={'/main'}
+              style={{ textDecoration: 'none', color: 'inherit' }}>
               WOODOKU
             </Link>
           </Typography>
