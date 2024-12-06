@@ -3,12 +3,13 @@ import App from './App'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import store from './store/store'
+import '@testing-library/jest-dom'
 
-const appContent = 'Hello world'
+const appContent = 'Авторизация'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
-  Promise.resolve({ json: () => Promise.resolve('hey') })
+  Promise.resolve({ json: () => Promise.resolve(`${appContent}`) })
 )
 
 test('Example test', async () => {

@@ -72,13 +72,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       // const redirectUri = 'http://localhost:3000'
       const serviceId = await getServiceId(redirectUri)
 
-      console.log('Получен serviceId:', serviceId)
-
       const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
         redirectUri
       )}`
-      console.log('Перенаправляем на URL авторизации Яндекса:', authUrl)
-
       window.location.href = authUrl
     } catch (err) {
       console.error('Ошибка при авторизации через Яндекс:', err)
@@ -87,7 +83,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   }
 
   const getServiceId = async (redirectUri: string): Promise<string> => {
-    console.log('Запрашиваем service_id с redirect_uri:', redirectUri)
     const response = await fetch(
       `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
         redirectUri
@@ -102,8 +97,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     }
 
     const data = await response.json()
-    console.log('Ответ от сервера при получении service_id:', data)
-
     return data.service_id
   }
 
@@ -112,8 +105,6 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const redirectUri = 'https://local.ya-praktikum.tech'
       // const redirectUri = 'http://localhost:3000'
       const data = { code, redirect_uri: redirectUri }
-
-      console.log('Отправляем POST-запрос на /oauth/yandex с данными:', data)
 
       const response = await fetch(
         'https://ya-praktikum.tech/api/v2/oauth/yandex',
@@ -127,15 +118,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         }
       )
 
-      console.log('Статус ответа:', response.status)
-      console.log('Заголовки ответа:', response.headers)
-
       const contentType = response.headers.get('Content-Type')
       const responseData = contentType?.includes('application/json')
         ? await response.json()
         : await response.text()
-
-      console.log('Ответ от сервера при обмене кода на токен:', responseData)
 
       if (!response.ok) {
         throw new Error(
@@ -143,9 +129,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         )
       }
 
-      console.log('Токен успешно получен. Загружаем данные пользователя...')
       const userData = await getUserData()
-      console.log('Данные пользователя:', userData)
 
       storeUserData(userData)
       onLogin()
@@ -163,13 +147,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const code = searchParams.get('code')
 
     if (code) {
-      console.log('Код авторизации найден в URL:', code)
       handleOAuthCode(code).then(() => {
         window.history.replaceState({}, document.title, '')
       })
-    } else {
-      console.log('Код авторизации отсутствует в URL.')
-    }
+    } else
+      (error: Error) => {
+        console.error(error)
+      }
   }, [])
 
   return (
