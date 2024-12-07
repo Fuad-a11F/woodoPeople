@@ -13,6 +13,8 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 RUN yarn lerna bootstrap
+RUN cd /app/packages/client && yarn link  # Линкуем клиент
+RUN yarn link "client"  # Линкуем клиент к серверу
 RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
 
 
