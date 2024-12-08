@@ -1,8 +1,5 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
-import ErrorBoundary from './components/ErrorBoundary'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-import { AuthRoutes } from './routes'
 
 function App() {
   useEffect(() => {
@@ -16,26 +13,7 @@ function App() {
     fetchServerData()
   }, [])
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        colorSchemes: {
-          dark: true,
-        },
-      }),
-    []
-  )
-
-  return (
-    <div className="App">
-      <ErrorBoundary>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthRoutes />
-        </ThemeProvider>
-      </ErrorBoundary>
-    </div>
-  )
+  return <div className="App">Hello world</div>
 }
 
 export default App
