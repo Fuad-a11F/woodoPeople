@@ -16,7 +16,9 @@ ReactDOM.hydrateRoot(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <div className="csr-app">
+          <App />
+        </div>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
