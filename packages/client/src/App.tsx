@@ -13,27 +13,7 @@ function App() {
     fetchServerData()
   }, [])
 
-  // const theme = useMemo(
-  //   () =>
-  //     createTheme({
-  //       colorSchemes: {
-  //         dark: true,
-  //       },
-  //     }),
-  //   []
-  // )
-
-  return (
-    <div className="App">
-      Hello world
-      {/*<ErrorBoundary>*/}
-      {/*  <ThemeProvider theme={theme}>*/}
-      {/*    <CssBaseline />*/}
-      {/*    <AuthRoutes />*/}
-      {/*  </ThemeProvider>*/}
-      {/*</ErrorBoundary>*/}
-    </div>
-  )
+  return <div className="App">Hello world</div>
 }
 
 export default App
