@@ -37,10 +37,6 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
-  app.get('/user', (_, res) => {
-    res.json({ name: '</script>Степа', secondName: 'Степанов' })
-  })
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
