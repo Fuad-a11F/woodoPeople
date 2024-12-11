@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
@@ -17,19 +19,9 @@ async function startServer() {
   const port = Number(process.env.SERVER_PORT) || 3001
 
   let vite: ViteDevServer | undefined
-  let distPath: string
-  let srcPath: string
-  let ssrClientPath: string
-
-  if (isDev()) {
-    distPath = '../client/dist'
-    srcPath = '../client'
-    ssrClientPath = '../client/ssr-dist/client.cjs'
-  } else {
-    distPath = './client/dist'
-    srcPath = './client'
-    ssrClientPath = './client/ssr-dist/client.cjs'
-  }
+  const distPath = path.dirname(require.resolve('client/dist/index.html'))
+  const srcPath = path.dirname(require.resolve('client'))
+  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
 
   if (isDev()) {
     vite = await createViteServer({
@@ -66,19 +58,21 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: () => Promise<string>
+      let render: (req: any) => Promise<{ html: string; initialState: unknown }>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
       } else {
-        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
+        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'src/entry-server.tsx')))
           .render
       }
 
-      const appHtml = await render()
+      const { html: appHtml, initialState } = await render(req)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
-
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+        `<!--ssr-initial-state-->`,
+        `<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
+      )
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       if (isDev()) {
