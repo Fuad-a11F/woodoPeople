@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { act } from 'react'
 import store from './store/store'
 
-const appContent = 'Hello world'
+const appContent = 'Авторизация'
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
