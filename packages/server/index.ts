@@ -43,7 +43,6 @@ const startServer = async () => {
   app.get('/api', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
