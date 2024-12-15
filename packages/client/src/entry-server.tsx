@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 
 import { fetchUserData } from './store/reducers/userSlice'
 import rootReducer from './store/reducers'
-import { StaticRouter } from "react-router-dom/server"
+import { StaticRouter } from 'react-router-dom/server'
 
 export const render = async (req: any) => {
   const store = configureStore({

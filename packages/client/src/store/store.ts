@@ -10,7 +10,8 @@ import rootReducer from './reducers'
 
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState: typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
+  preloadedState:
+    typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
 })
 
 export default store
