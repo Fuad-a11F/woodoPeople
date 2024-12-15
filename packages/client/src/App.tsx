@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react'
-import './App.css'
+import React, { useMemo, useEffect } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import './App.css'
 import { AuthRoutes } from './routes'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
   useEffect(() => {
@@ -12,7 +13,6 @@ function App() {
       const data = await response.json()
       console.log(data)
     }
-
     fetchServerData()
   }, [])
 

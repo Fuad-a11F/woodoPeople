@@ -11,8 +11,8 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { toggleIsStartGame } from '../../store/reducers/gameSlice'
 import { selectIsStartGame } from '../../store/selectors/gameSelectors'
+import { isStartGameFalse } from '../../store/reducers/gameSlice'
 
 const StartGame: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -22,7 +22,7 @@ const StartGame: React.FC = () => {
 
   const handleClose = (_: unknown, reason: string) => {
     if (reason !== 'backdropClick') {
-      dispatch(toggleIsStartGame())
+      dispatch(isStartGameFalse())
     }
   }
 
@@ -37,10 +37,7 @@ const StartGame: React.FC = () => {
       hideBackdrop={false}
       disableEscapeKeyDown={true}>
       <Card sx={{ p: 6, width: 480 }}>
-        <DialogContent
-          sx={{
-            color: 'white',
-          }}>
+        <DialogContent>
           <Box>
             <Typography mb={1} variant="body1">
               Размещайте фигуры на игровом поле. Когда вся строка или столбец

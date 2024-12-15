@@ -1,9 +1,9 @@
 export interface LeaderboardItem {
   id: number
   name: string
-  score: number
+  WoodoPeopleTeam: number
 }
 
 export interface LeaderboardProps {
-  data: LeaderboardItem[]
+  data: LeaderboardItem
 }

@@ -17,14 +17,17 @@ import { getRandomElements } from '../../modules/CanvasGameLogic/getRandomElemen
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { annulPoint, toggleIsFinishGame } from '../../store/reducers/gameSlice'
-import { selectIsFinishGame } from '../../store/selectors/gameSelectors'
+import {
+  selectGamePoint,
+  selectIsFinishGame,
+} from '../../store/selectors/gameSelectors'
 
 import { FinishGameInterface } from '../../interfaces'
 
 const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
+  const point = useAppSelector(selectGamePoint)
   const isOpenFinish = useAppSelector(selectIsFinishGame)
 
   const handleClose = (_: unknown, reason: string) => {
@@ -51,7 +54,7 @@ const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
       hideBackdrop={false}
       disableEscapeKeyDown={true}>
       <Card sx={{ p: 6, width: 480 }}>
-        <DialogTitle sx={{ textAlign: 'center', color: 'white', fontSize: 26 }}>
+        <DialogTitle sx={{ textAlign: 'center', fontSize: 26 }}>
           NO SPACE LEFT!
         </DialogTitle>
 
@@ -64,20 +67,20 @@ const FinishGame: React.FC<FinishGameInterface> = ({ setShapes }) => {
               justifyContent={'space-between'}
               textAlign={'center'}
               padding={'0 20px'}>
-              <Box>
-                <Typography mb={1} fontSize={22} fontWeight={700}>
-                  Best
-                </Typography>
+              {/*<Box>*/}
+              {/*  <Typography mb={1} fontSize={22} fontWeight={700}>*/}
+              {/*    Best*/}
+              {/*  </Typography>*/}
 
-                <Typography fontSize={18}>144</Typography>
-              </Box>
+              {/*  <Typography fontSize={18}>144</Typography>*/}
+              {/*</Box>*/}
 
               <Box>
                 <Typography mb={1} fontSize={22} fontWeight={700}>
                   Score
                 </Typography>
 
-                <Typography fontSize={18}>144</Typography>
+                <Typography fontSize={18}>{point}</Typography>
               </Box>
             </Stack>
           </Card>

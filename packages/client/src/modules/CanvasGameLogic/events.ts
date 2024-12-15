@@ -13,6 +13,8 @@ import { getRandomElements } from './getRandomElements'
 import { gridSize, tileSize } from './consts'
 
 import { Shape } from '../../interfaces'
+import { getUserData } from '../../api/api'
+import { saveLeaderboard } from '../../api/leaderboardApi'
 
 let offsetX = 0
 let offsetY = 0
@@ -108,7 +110,6 @@ export const handleMouseLeave = (
 export const handleMouseUp = (
   shapes: Shape[],
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
-  setOpen: Dispatch<SetStateAction<boolean>>,
   setShapes: (newShapes: Shape[]) => void,
   setPointGame: (point: number) => void
 ) => {
@@ -150,10 +151,6 @@ export const handleMouseUp = (
     if (areShapesInPanel(shapes)) {
       const newShapes = [...getRandomElements()]
       setShapes([...shapes, ...newShapes])
-
-      if (!isThereSpaceForNewShape([...shapes, ...newShapes])) {
-        setOpen(true)
-      }
     }
   }
 }

@@ -1,21 +1,30 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import dotenv from 'dotenv'
 import cors from 'cors'
-import { createServer as createViteServer } from 'vite'
-import type { ViteDevServer } from 'vite'
+import express, { Request, Response, NextFunction } from 'express'
+import path from 'path'
+import fs from 'fs'
+import { ViteDevServer, createServer as createViteServer } from 'vite'
+import { createClientAndConnect } from './db'
+import forumRoutes from './routes/forumRoutes'
 
 dotenv.config()
 
-import express from 'express'
-import * as fs from 'fs'
-import * as path from 'path'
+const isDev = () => process.env.NODE_ENV !== 'production'
 
-const isDev = () => process.env.NODE_ENV === 'development'
-
-async function startServer() {
+const startServer = async () => {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3001
+  app.use(express.json())
 
+  // Подключение маршрутов
+  app.use('/api', forumRoutes)
+
+  // Подключение к базе данных
+  await createClientAndConnect()
+
+  const port = Number(process.env.SERVER_PORT) || 3001
   let vite: ViteDevServer | undefined
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
@@ -34,12 +43,11 @@ async function startServer() {
   app.get('/api', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
 
-  app.use('*', async (req, res, next) => {
+  app.use('*', async (req: Request, res: Response, next: NextFunction) => {
     const url = req.originalUrl
 
     try {
@@ -56,19 +64,28 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: () => Promise<string>
+      let render: (req: any) => Promise<{ html: string; initialState: unknown }>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
       } else {
-        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-          .render
+        render = (
+          await vite!.ssrLoadModule(
+            path.resolve(srcPath, 'src/entry-server.tsx')
+          )
+        ).render
       }
 
-      const appHtml = await render()
+      const { html: appHtml, initialState } = await render(req)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
-
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
+            initialState
+          )}</script>`
+        )
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       if (isDev()) {

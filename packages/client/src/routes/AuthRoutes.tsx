@@ -12,12 +12,11 @@ import {
   Profile,
   Registration,
 } from '../pages'
-import { sampleData } from '../utils/sampleData'
 import { Menu } from '../components'
 import useAuth from '../utils/useAuth'
 
 const AuthRoutes = () => {
-  const { auth, setAuth } = useAuthCheck()
+  const { auth, setAuth, loading } = useAuthCheck()
 
   const handleLogout = () => {
     sessionStorage.clear()
@@ -25,12 +24,12 @@ const AuthRoutes = () => {
     window.location.reload()
   }
 
-  const ProtectedMain = withAuth(Main)
-  const ProtectedProfile = withAuth(Profile)
-  const ProtectedForum = withAuth(Forum)
-  const ProtectedForumTopic = withAuth(ForumTopic)
-  const ProtectedGame = withAuth(Game)
-  const ProtectedLeaderboard = withAuth(() => <Leaderboard data={sampleData} />)
+  const ProtectedMain = withAuth(Main, auth, loading)
+  const ProtectedProfile = withAuth(Profile, auth, loading)
+  const ProtectedForum = withAuth(Forum, auth, loading)
+  const ProtectedForumTopic = withAuth(ForumTopic, auth, loading)
+  const ProtectedGame = withAuth(Game, auth, loading)
+  const ProtectedLeaderboard = withAuth(Leaderboard, auth, loading)
 
   return (
     <>
