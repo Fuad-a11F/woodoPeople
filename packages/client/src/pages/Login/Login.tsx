@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { LoginProps } from './types'
@@ -6,6 +6,11 @@ import { SignInRequest } from '../../api/types'
 import { getUserData, signIn } from '../../api/api'
 import { validateLogin, validatePassword } from '../../utils/validators'
 import { storeUserData } from '../../utils/storeUserData'
+import {
+  exchangeOAuthCodeForToken,
+  getServiceId,
+  YA_AUTH_URL,
+} from '../../api/authApi'
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const navigate = useNavigate()
@@ -57,6 +62,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         setError(response.reason)
       }
     } catch (err) {
+      console.error('Ошибка при авторизации:', err)
       setError('Ошибка авторизации. Проверьте логин и пароль.')
     }
   }
@@ -64,6 +70,47 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleRegistrationClick = () => {
     navigate('/registration')
   }
+  const handleYandexLogin = async () => {
+    try {
+      const serviceId = await getServiceId(YA_AUTH_URL)
+      const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
+        YA_AUTH_URL
+      )}`
+      window.location.href = authUrl
+    } catch (err) {
+      console.error('Ошибка при авторизации через Яндекс:', err)
+      setError('Не удалось начать авторизацию через Яндекс.')
+    }
+  }
+
+  const handleOAuthCode = async (code: string) => {
+    try {
+      await exchangeOAuthCodeForToken(code)
+      const userData = await getUserData()
+      storeUserData(userData)
+      onLogin()
+      navigate('/main')
+    } catch (err) {
+      console.error('Ошибка при обмене кода на токен:', err)
+      setError(
+        err instanceof Error ? err.message : 'Ошибка при обмене кода на токен.'
+      )
+    }
+  }
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const code = searchParams.get('code')
+
+    if (code) {
+      handleOAuthCode(code).then(() => {
+        window.history.replaceState({}, document.title, '')
+      })
+    } else
+      (error: Error) => {
+        console.error(error)
+      }
+  }, [])
 
   return (
     <Box display="flex" height="100vh">
@@ -125,6 +172,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               color="secondary"
               onClick={handleRegistrationClick}>
               Регистрация
+            </Button>
+          </Box>
+          <Box mt={2} textAlign="center">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleYandexLogin}>
+              Войти через Яндекс
             </Button>
           </Box>
         </Box>

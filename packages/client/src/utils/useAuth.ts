@@ -14,10 +14,10 @@ const useAuth = () => {
         const userData = await getUserData()
         if (userData) {
           setAuth(true)
-          navigate('/')
+          navigate('/main')
         } else {
           setAuth(false)
-          navigate('/login')
+          navigate('/')
         }
       } catch (error) {
         setAuth(false)
