@@ -11,7 +11,7 @@ export class Topic extends Model<Topic> {
     autoIncrement: true,
     primaryKey: true,
   })
-  override id!: number
+  declare id: number
 
   @Column({
     type: DataType.STRING,
