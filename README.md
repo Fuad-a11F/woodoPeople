@@ -1,5 +1,8 @@
 ### [`Видео к зачету`](https://disk.yandex.ru/i/gMk1AskmOe6pBQ)
 
+### [`Видео к зачету - 2 `](https://disk.yandex.ru/i/ka4DSnfAXn4FuA)
+
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
