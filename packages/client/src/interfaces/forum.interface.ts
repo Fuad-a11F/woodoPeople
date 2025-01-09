@@ -23,8 +23,8 @@ export interface Topic {
 export interface ForumTopic {
   id: number
   title: string
-  author: User
-  replies: number
-  lastPostDate: string
-  lastMessageAuthor: User
+  author?: User
+  replies?: number
+  lastPostDate?: string
+  lastMessageAuthor?: User
 }

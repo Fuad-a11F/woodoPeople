@@ -27,7 +27,7 @@ const ForumItem: React.FC<ForumTopic> = ({
             <Grid2 size={{ xs: 8 }}>
               <Typography variant="subtitle1">{title}</Typography>
               <Typography variant="caption" color="text.secondary">
-                by {author.name}
+                {/* by {author.name} */}
               </Typography>
             </Grid2>
             <Grid2 size={{ xs: 2 }} container alignItems="center">

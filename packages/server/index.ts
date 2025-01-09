@@ -107,7 +107,6 @@ import cors from 'cors'
 import express, { Request, Response, NextFunction } from 'express'
 import path from 'path'
 import fs from 'fs'
-import { createServer } from 'vite' // используем createViteServer
 import { createClientAndConnect } from './db'
 import forumRoutes from './routes/forumRoutes'
 
@@ -131,9 +130,10 @@ const startServer = async () => {
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
 
-  let vite: Awaited<ReturnType<typeof createServer>> | undefined
+  let vite: any // Используем динамический импорт
 
   if (isDev()) {
+    const { createServer } = await import('vite') // Динамический импорт
     vite = await createServer({
       server: { middlewareMode: true },
       root: srcPath,
@@ -202,4 +202,6 @@ const startServer = async () => {
   })
 }
 
-startServer()
+startServer().catch(err => {
+  console.error('Error starting server:', err)
+})

@@ -92,7 +92,6 @@ const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const vite_1 = require("vite"); // используем createViteServer
 const db_1 = require("./db");
 const forumRoutes_1 = __importDefault(require("./routes/forumRoutes"));
 dotenv_1.default.config();
@@ -109,9 +108,10 @@ const startServer = async () => {
     const distPath = path_1.default.dirname(require.resolve('client/dist/index.html'));
     const srcPath = path_1.default.dirname(require.resolve('client'));
     const ssrClientPath = require.resolve('client/ssr-dist/client.cjs');
-    let vite;
+    let vite; // Используем динамический импорт
     if (isDev()) {
-        vite = await (0, vite_1.createServer)({
+        const { createServer } = await import('vite'); // Динамический импорт
+        vite = await createServer({
             server: { middlewareMode: true },
             root: srcPath,
             appType: 'custom',
@@ -159,4 +159,6 @@ const startServer = async () => {
         console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
     });
 };
-startServer();
+startServer().catch((err) => {
+    console.error('Error starting server:', err);
+});

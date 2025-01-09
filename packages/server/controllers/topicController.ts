@@ -30,7 +30,6 @@ export const createTopic = async (req: Request, res: Response) => {
     const topic = await Topic.create({
       title,
       content,
-      username,
     } as Topic)
 
     res.status(200).json(topic)

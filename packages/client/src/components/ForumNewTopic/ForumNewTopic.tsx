@@ -5,11 +5,19 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import TextField from '@mui/material/TextField'
+import { createTopic } from '../../api/forumApi'
 
-function ForumNewTopic() {
+function ForumNewTopic({
+  onTopicCreated,
+}: {
+  onTopicCreated: (newTopic: any) => void
+}) {
   const [open, setOpen] = useState(false)
   const [topicTitle, setTopicTitle] = useState('')
   const [topicDescription, setTopicDescription] = useState('')
+  const token = 'test-token' // Используем реальный токен
+  const user = JSON.parse(sessionStorage.getItem('user') || '{}') // Получаем пользователя из sessionStorage
+  const username = user.first_name || 'Неизвестный пользователь' // Используем имя или заглушку
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -17,12 +25,28 @@ function ForumNewTopic() {
 
   const handleClose = () => {
     setOpen(false)
+    setTopicTitle('')
+    setTopicDescription('')
   }
 
-  const handleCreateTopic = () => {
-    // Логика создания нового топика
+  const handleCreateTopic = async () => {
+    if (!topicTitle.trim() || !topicDescription.trim()) {
+      alert('Название и описание топика обязательны!')
+      return
+    }
 
-    handleClose()
+    try {
+      const newTopic = await createTopic(token, {
+        title: topicTitle,
+        content: topicDescription,
+        username: username, // Передаем имя пользователя
+      })
+
+      onTopicCreated(newTopic) // Обновляем список топиков
+      handleClose()
+    } catch (error) {
+      console.error('Ошибка при создании нового топика:', error)
+    }
   }
 
   return (
@@ -61,7 +85,12 @@ function ForumNewTopic() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Отмена</Button>
-          <Button onClick={handleCreateTopic}>Создать</Button>
+          <Button
+            onClick={handleCreateTopic}
+            color="primary"
+            variant="contained">
+            Создать
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

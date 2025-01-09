@@ -5,13 +5,13 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
+// import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import GamesIcon from '@mui/icons-material/Games'
+// import GamesIcon from '@mui/icons-material/Games'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../api/api'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
@@ -69,7 +69,7 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <GamesIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <GamesIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -98,7 +98,7 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit">
-              <MenuIcon />
+              {/* <MenuIcon /> */}
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -126,7 +126,7 @@ function ResponsiveAppBar({ onLogout }: { onLogout: () => void }) {
               ))}
             </Menu>
           </Box>
-          <GamesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <GamesIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap

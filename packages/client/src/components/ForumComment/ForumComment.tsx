@@ -8,12 +8,12 @@ const ForumComment: React.FC<Comment> = ({ id, author, content, date }) => {
       <CardContent>
         <Grid2 container spacing={2}>
           <Grid2>
-            <Avatar src={author.avatar} alt={author.name} />
+            {/* <Avatar src={author.avatar} alt={author.name} /> */}
           </Grid2>
           <Grid2>
             <Typography variant="body1">{content}</Typography>
             <Typography variant="caption" color="textSecondary">
-              {author.name} — {date}
+              {/* {author.name} — {date} */}
             </Typography>
           </Grid2>
         </Grid2>
