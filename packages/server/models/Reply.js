@@ -1,4 +1,13 @@
 "use strict";
+// import {
+//   Table,
+//   Model,
+//   Column,
+//   DataType,
+//   ForeignKey,
+//   BelongsTo,
+// } from 'sequelize-typescript'
+// import { Comment } from './Comment'
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,13 +19,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Reply = void 0;
+// @Table({
+//   tableName: 'replies',
+//   timestamps: true,
+// })
+// export class Reply extends Model<Reply> {
+//   @Column({
+//     type: DataType.INTEGER,
+//     autoIncrement: true,
+//     primaryKey: true,
+//   })
+//   declare id: number
+//   @ForeignKey(() => Comment)
+//   @Column({
+//     type: DataType.INTEGER,
+//     allowNull: false,
+//   })
+//   commentId!: number
+//   @BelongsTo(() => Comment)
+//   comment!: Comment
+//   @Column({
+//     type: DataType.TEXT,
+//     allowNull: false,
+//   })
+//   content!: string
+//   @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//   })
+//   username!: string
+// }
 const sequelize_typescript_1 = require("sequelize-typescript");
 const Comment_1 = require("./Comment");
 let Reply = class Reply extends sequelize_typescript_1.Model {
     commentId;
     comment;
     content;
-    username;
 };
 __decorate([
     (0, sequelize_typescript_1.Column)({
@@ -45,13 +83,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Reply.prototype, "content", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], Reply.prototype, "username", void 0);
 Reply = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: 'replies',

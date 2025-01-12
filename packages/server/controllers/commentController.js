@@ -5,10 +5,10 @@ const Comment_1 = require("../models/Comment");
 const Topic_1 = require("../models/Topic");
 // Добавить комментарий к топику
 const addComment = async (req, res) => {
-    const { topicId, content, username } = req.body;
+    const { topicId, content } = req.body;
     // Проверка обязательных полей
-    if (!topicId || !content || !username) {
-        res.status(400).json({ error: 'Topic ID, Content и Username обязательны' });
+    if (!topicId || !content) {
+        res.status(400).json({ error: 'Topic ID, Content обязательны' });
         return;
     }
     try {
@@ -22,7 +22,7 @@ const addComment = async (req, res) => {
         const comment = await Comment_1.Comment.create({
             topicId: Number(topicId),
             content: String(content),
-            username: String(username),
+            // username: String(username),
         });
         res.status(200).json(comment);
     }

@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Grid2, TextField, Typography } from '@mui/material'
-import { getDate } from '../../utils'
-
-import { Comment } from '../../interfaces'
 
 interface ForumNewCommentProps {
-  onSubmit: (newComment: Comment) => void
+  onSubmit: (newComment: string) => void // Изменено: передаём только строку
 }
 
 const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
@@ -13,17 +10,7 @@ const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
 
   const handleCommentSubmit = () => {
     if (newComment.trim()) {
-      const newCommentObject: Comment = {
-        id: Date.now(),
-        author: {
-          name: 'Текущий пользователь', // заменить на актуальное имя пользователя, когда оно появится
-          avatar: '/avatar.jpg',
-        },
-        content: newComment,
-        date: getDate(),
-      }
-
-      onSubmit(newCommentObject)
+      onSubmit(newComment.trim()) // Передаём только строку
       setNewComment('') // Очищаем поле после добавления комментария
     }
   }

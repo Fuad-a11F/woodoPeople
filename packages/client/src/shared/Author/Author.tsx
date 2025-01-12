@@ -2,11 +2,23 @@ import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { ForumTopic } from '../../interfaces'
+import { User } from '../../interfaces'
 
-type AuthorProps = Omit<ForumTopic, 'id' | 'author' | 'title' | 'replies'>
+type AuthorProps = {
+  lastMessageAuthor?: User // Сделаем это свойство необязательным
+  lastPostDate?: string // Это свойство тоже может быть необязательным
+}
 
 const Author: React.FC<AuthorProps> = ({ lastMessageAuthor, lastPostDate }) => {
+  // Проверяем наличие lastMessageAuthor и lastPostDate
+  if (!lastMessageAuthor) {
+    return (
+      <Typography variant="caption" color="textSecondary">
+        Автор неизвестен
+      </Typography>
+    )
+  }
+
   return (
     <Box
       sx={{
@@ -16,8 +28,8 @@ const Author: React.FC<AuthorProps> = ({ lastMessageAuthor, lastPostDate }) => {
         alignItems: 'center',
       }}>
       <Avatar
-        alt={lastMessageAuthor.name}
-        src={lastMessageAuthor.avatar}
+        alt={lastMessageAuthor.name || 'Неизвестный автор'}
+        src={lastMessageAuthor.avatar || '/default-avatar.jpg'}
         sx={{ width: 36, height: 36 }}
       />
       <Box
@@ -25,10 +37,14 @@ const Author: React.FC<AuthorProps> = ({ lastMessageAuthor, lastPostDate }) => {
           display: 'flex',
           flexDirection: 'column',
           gap: 0,
-          alignItems: 'left',
+          alignItems: 'flex-start',
         }}>
-        <Typography variant="caption">{lastMessageAuthor.name}</Typography>
-        <Typography variant="caption">{lastPostDate}</Typography>
+        <Typography variant="caption">
+          {lastMessageAuthor.name || 'Неизвестный автор'}
+        </Typography>
+        <Typography variant="caption">
+          {lastPostDate || 'Дата неизвестна'}
+        </Typography>
       </Box>
     </Box>
   )

@@ -7,6 +7,7 @@ import { Card, CardContent, Typography, Grid2 } from '@mui/material'
 import { ForumTopic } from '../../interfaces'
 
 const ForumItem: React.FC<ForumTopic> = ({
+  id,
   title,
   author,
   replies,
@@ -16,7 +17,7 @@ const ForumItem: React.FC<ForumTopic> = ({
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/forum-topic')
+    navigate(`/forum-topic/${id}`)
   }
 
   return (

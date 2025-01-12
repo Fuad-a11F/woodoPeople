@@ -1,4 +1,15 @@
 "use strict";
+// import {
+//   Table,
+//   Model,
+//   Column,
+//   DataType,
+//   ForeignKey,
+//   BelongsTo,
+//   HasMany,
+// } from 'sequelize-typescript'
+// import { Topic } from './Topic'
+// import { Reply } from './Reply'
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,6 +21,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Comment = void 0;
+// @Table({
+//   tableName: 'comments',
+//   timestamps: true,
+// })
+// export class Comment extends Model<Comment> {
+//   @Column({
+//     type: DataType.INTEGER,
+//     autoIncrement: true,
+//     primaryKey: true,
+//   })
+//   declare id: number
+//   @ForeignKey(() => Topic)
+//   @Column({
+//     type: DataType.INTEGER,
+//     allowNull: false,
+//   })
+//   topicId!: number
+//   @BelongsTo(() => Topic)
+//   topic!: Topic
+//   @Column({
+//     type: DataType.TEXT,
+//     allowNull: false,
+//   })
+//   content!: string
+//   @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//   })
+//   username!: string
+//   @HasMany(() => Reply)
+//   replies!: Reply[]
+// }
 const sequelize_typescript_1 = require("sequelize-typescript");
 const Topic_1 = require("./Topic");
 const Reply_1 = require("./Reply");
@@ -17,7 +60,6 @@ let Comment = class Comment extends sequelize_typescript_1.Model {
     topicId;
     topic;
     content;
-    username;
     replies;
 };
 __decorate([
@@ -47,13 +89,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Comment.prototype, "content", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false,
-    }),
-    __metadata("design:type", String)
-], Comment.prototype, "username", void 0);
 __decorate([
     (0, sequelize_typescript_1.HasMany)(() => Reply_1.Reply),
     __metadata("design:type", Array)

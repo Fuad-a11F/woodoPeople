@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Card, CardContent, Grid2, Typography } from '@mui/material'
+import { Card, CardContent, Grid2, Typography } from '@mui/material'
 import { Comment } from '../../interfaces'
 
 const ForumComment: React.FC<Comment> = ({ id, author, content, date }) => {

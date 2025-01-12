@@ -1,5 +1,5 @@
 import axios from 'axios'
-const token = 'test-token' // Здесь подставьте реальный токен
+const token = 'test-token'
 
 export const fetchTopics = async (token: string) => {
   const response = await axios.get('http://localhost:3001/api/topics', {
@@ -11,22 +11,60 @@ export const fetchTopics = async (token: string) => {
   return response.data.map((topic: any) => ({
     id: topic.id,
     title: topic.title,
-    username: topic.username,
     replies: topic.comments?.length || 0,
     lastPostDate: new Date(topic.updatedAt).toLocaleDateString(),
-    lastMessageAuthor: topic.username,
+    lastMessageAuthor: 'Кто-то',
   }))
 }
 
 export const createTopic = async (
   token: string,
-  data: { title: string; content: string; username: string }
+  data: { title: string; content: string }
 ) => {
   const response = await axios.post('http://localhost:3001/api/topics', data, {
     headers: {
-      Authorization: `Bearer ${'test-token'}`,
+      Authorization: `Bearer ${token}`,
     },
   })
+
+  return response.data
+}
+
+// Получение топика и его комментариев
+export const fetchTopic = async (topicId: string) => {
+  const response = await axios.get(
+    `http://localhost:3001/api/topics/${topicId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  return {
+    id: response.data.id,
+    title: response.data.title,
+    content: response.data.content,
+    createdAt: response.data.createdAt,
+    updatedAt: response.data.updatedAt,
+    comments: response.data.comments || [],
+  }
+}
+
+// Добавление нового комментария
+export const addComment = async (data: {
+  topicId: string
+  content: string
+}) => {
+  const response = await axios.post(
+    'http://localhost:3001/api/comments',
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
 
   return response.data
 }

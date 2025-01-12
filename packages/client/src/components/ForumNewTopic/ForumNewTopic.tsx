@@ -16,8 +16,8 @@ function ForumNewTopic({
   const [topicTitle, setTopicTitle] = useState('')
   const [topicDescription, setTopicDescription] = useState('')
   const token = 'test-token' // Используем реальный токен
-  const user = JSON.parse(sessionStorage.getItem('user') || '{}') // Получаем пользователя из sessionStorage
-  const username = user.first_name || 'Неизвестный пользователь' // Используем имя или заглушку
+  // const user = JSON.parse(sessionStorage.getItem('user') || '{}') // Получаем пользователя из sessionStorage
+  // const username = user.first_name || 'Неизвестный пользователь' // Используем имя или заглушку
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -39,7 +39,7 @@ function ForumNewTopic({
       const newTopic = await createTopic(token, {
         title: topicTitle,
         content: topicDescription,
-        username: username, // Передаем имя пользователя
+        // username: username, // Передаем имя пользователя
       })
 
       onTopicCreated(newTopic) // Обновляем список топиков

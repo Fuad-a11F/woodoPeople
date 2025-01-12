@@ -159,6 +159,6 @@ const startServer = async () => {
         console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
     });
 };
-startServer().catch((err) => {
+startServer().catch(err => {
     console.error('Error starting server:', err);
 });

@@ -17,11 +17,11 @@ export const getAllTopics = async (_: Request, res: Response) => {
 
 // Создать новый топик
 export const createTopic = async (req: Request, res: Response) => {
-  const { title, content, username } = req.body
+  const { title, content } = req.body
 
   // Проверка обязательных полей
-  if (!title || !content || !username) {
-    res.status(400).json({ error: 'Title, Content и Username обязательны' })
+  if (!title || !content) {
+    res.status(400).json({ error: 'Title, Content обязательны' })
     return
   }
 
@@ -38,7 +38,6 @@ export const createTopic = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Не удалось создать топик' })
   }
 }
-
 // Получить конкретный топик с комментариями
 export const getTopicById = async (req: Request, res: Response) => {
   const { id } = req.params

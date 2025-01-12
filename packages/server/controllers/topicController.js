@@ -19,10 +19,10 @@ const getAllTopics = async (_, res) => {
 exports.getAllTopics = getAllTopics;
 // Создать новый топик
 const createTopic = async (req, res) => {
-    const { title, content, username } = req.body;
+    const { title, content } = req.body;
     // Проверка обязательных полей
-    if (!title || !content || !username) {
-        res.status(400).json({ error: 'Title, Content и Username обязательны' });
+    if (!title || !content) {
+        res.status(400).json({ error: 'Title, Content обязательны' });
         return;
     }
     try {
