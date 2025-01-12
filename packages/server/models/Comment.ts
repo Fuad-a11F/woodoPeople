@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript'
 import { Topic } from './Topic'
 import { Reply } from './Reply'
+import { Reaction } from './Reaction'
 
 @Table({
   tableName: 'comments',
@@ -46,4 +47,7 @@ export class Comment extends Model<Comment> {
 
   @HasMany(() => Reply)
   replies!: Reply[]
+
+  @HasMany(() => Reaction)
+  reaction!: Reaction[]
 }
