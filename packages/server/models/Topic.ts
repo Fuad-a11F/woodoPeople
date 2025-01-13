@@ -11,7 +11,7 @@ export class Topic extends Model<Topic> {
     autoIncrement: true,
     primaryKey: true,
   })
-  override id!: number
+  declare id: number
 
   @Column({
     type: DataType.STRING,
@@ -24,12 +24,6 @@ export class Topic extends Model<Topic> {
     allowNull: false,
   })
   content!: string
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  username!: string
 
   @HasMany(() => Comment)
   comments!: Comment[]

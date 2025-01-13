@@ -7,6 +7,7 @@ import { Card, CardContent, Typography, Grid2 } from '@mui/material'
 import { ForumTopic } from '../../interfaces'
 
 const ForumItem: React.FC<ForumTopic> = ({
+  id,
   title,
   author,
   replies,
@@ -16,7 +17,7 @@ const ForumItem: React.FC<ForumTopic> = ({
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/forum-topic')
+    navigate(`/forum-topic/${id}`)
   }
 
   return (
@@ -27,7 +28,7 @@ const ForumItem: React.FC<ForumTopic> = ({
             <Grid2 size={{ xs: 8 }}>
               <Typography variant="subtitle1">{title}</Typography>
               <Typography variant="caption" color="text.secondary">
-                by {author.name}
+                {/* by {author.name} */}
               </Typography>
             </Grid2>
             <Grid2 size={{ xs: 2 }} container alignItems="center">

@@ -15,14 +15,14 @@ const ForumPost: React.FC<Topic> = ({ author, title, content }) => {
       <CardContent>
         <Grid2 container spacing={2}>
           <Grid2>
-            <Avatar src={author.avatar} alt={author.name} />
+            {/* <Avatar src={author.avatar} alt={author.name} /> */}
           </Grid2>
           <Grid2>
             <Typography variant="h5" component="h1">
               {title}
             </Typography>
             <Typography variant="caption" color="textSecondary">
-              {author.name}
+              {/* {author.name} */}
             </Typography>
           </Grid2>
         </Grid2>

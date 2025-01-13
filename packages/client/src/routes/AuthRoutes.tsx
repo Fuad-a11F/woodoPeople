@@ -38,7 +38,7 @@ const AuthRoutes = () => {
         <Route path="/main" element={<ProtectedMain />} />
         <Route path="/profile" element={<ProtectedProfile />} />
         <Route path="/forum" element={<ProtectedForum />} />
-        <Route path="/forum-topic" element={<ProtectedForumTopic />} />
+        <Route path="/forum-topic/:topicId" element={<ProtectedForumTopic />} />
         <Route path="/game" element={<ProtectedGame />} />
         <Route path="/leaderboard" element={<ProtectedLeaderboard />} />
         <Route path="/" element={<Login onLogin={() => setAuth(true)} />} />

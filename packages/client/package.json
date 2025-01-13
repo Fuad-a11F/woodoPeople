@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node server/index.js",
+    "dev": "vite",
     "build": "tsc --project tsconfig.server.json && vite build --config vite.config.ts && vite build --ssr src/entry-server.tsx --outDir dist/server",
     "build:ssr": "tsc && vite build --config ssr.config.ts",
     "preview": "vite preview",
@@ -31,6 +31,7 @@
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.27.0",
     "redux": "^5.0.1",
+    "vite": "5.4.11",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
@@ -48,8 +49,7 @@
     "prettier": "^2.7.1",
     "sass": "^1.80.3",
     "ts-jest": "^28.0.8",
-    "typescript": "^4.8.2",
-    "vite": "^3.0.7"
+    "typescript": "^4.8.2"
   },
   "license": "MIT"
 }

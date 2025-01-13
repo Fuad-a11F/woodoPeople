@@ -18,7 +18,7 @@ export class Reply extends Model<Reply> {
     autoIncrement: true,
     primaryKey: true,
   })
-  override id!: number
+  declare id: number
 
   @ForeignKey(() => Comment)
   @Column({
@@ -35,10 +35,4 @@ export class Reply extends Model<Reply> {
     allowNull: false,
   })
   content!: string
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  username!: string
 }
