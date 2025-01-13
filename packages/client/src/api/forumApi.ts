@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Topic } from '../interfaces'
 const token = 'test-token'
 
 export const fetchTopics = async (token: string) => {
@@ -8,7 +9,7 @@ export const fetchTopics = async (token: string) => {
     },
   })
 
-  return response.data.map((topic: any) => ({
+  return response.data.map((topic: Topic) => ({
     id: topic.id,
     title: topic.title,
     replies: topic.comments?.length || 0,

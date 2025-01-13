@@ -12,6 +12,7 @@ export interface Comment {
 }
 
 export interface Topic {
+  updatedAt: string | number | Date
   id: number
   title: string
   content: string
