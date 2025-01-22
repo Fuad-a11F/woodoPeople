@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
 import { Button, Grid2, TextField, Typography } from '@mui/material'
+import { escapeHTML, validateComment } from '../../utils/validators'
 
 interface ForumNewCommentProps {
-  onSubmit: (newComment: string) => void // Изменено: передаём только строку
+  onSubmit: (newComment: string) => void
 }
 
 const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
   const [newComment, setNewComment] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
 
   const handleCommentSubmit = () => {
-    if (newComment.trim()) {
-      onSubmit(newComment.trim()) // Передаём только строку
-      setNewComment('') // Очищаем поле после добавления комментария
+    const trimmedComment = newComment.trim()
+    const { isValid, error: validationError } = validateComment(trimmedComment)
+
+    if (isValid) {
+      const safeComment = escapeHTML(trimmedComment)
+      onSubmit(safeComment) // Передаем экранированный комментарий
+      setNewComment('')
+    } else {
+      setError(validationError)
     }
   }
 
@@ -28,7 +36,12 @@ const ForumNewComment: React.FC<ForumNewCommentProps> = ({ onSubmit }) => {
             label="Ваш комментарий"
             variant="outlined"
             value={newComment}
-            onChange={e => setNewComment(e.target.value)}
+            onChange={e => {
+              setNewComment(e.target.value)
+              setError(null) // Убираем ошибку при изменении текста
+            }}
+            error={Boolean(error)}
+            helperText={error}
           />
         </Grid2>
         <Grid2 size={{ xs: 12 }}>
