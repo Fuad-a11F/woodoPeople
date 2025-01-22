@@ -6,18 +6,18 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import TextField from '@mui/material/TextField'
 import { createTopic } from '../../api/forumApi'
+import { escapeHTML, validateComment } from '../../utils/validators'
 
-function ForumNewTopic({
-  onTopicCreated,
-}: {
+interface ForumNewTopicProps {
   onTopicCreated: (newTopic: any) => void
-}) {
+}
+
+const ForumNewTopic: React.FC<ForumNewTopicProps> = ({ onTopicCreated }) => {
   const [open, setOpen] = useState(false)
   const [topicTitle, setTopicTitle] = useState('')
   const [topicDescription, setTopicDescription] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const token = 'test-token' // Используем реальный токен
-  // const user = JSON.parse(sessionStorage.getItem('user') || '{}') // Получаем пользователя из sessionStorage
-  // const username = user.first_name || 'Неизвестный пользователь' // Используем имя или заглушку
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -27,25 +27,38 @@ function ForumNewTopic({
     setOpen(false)
     setTopicTitle('')
     setTopicDescription('')
+    setError(null)
   }
 
   const handleCreateTopic = async () => {
-    if (!topicTitle.trim() || !topicDescription.trim()) {
-      alert('Название и описание топика обязательны!')
+    const trimmedTitle = topicTitle.trim()
+    const trimmedDescription = topicDescription.trim()
+
+    // Валидация заголовка и описания
+    const titleValidation = validateComment(trimmedTitle)
+    const descriptionValidation = validateComment(trimmedDescription)
+
+    if (!titleValidation.isValid) {
+      setError(titleValidation.error)
+      return
+    }
+
+    if (!descriptionValidation.isValid) {
+      setError(descriptionValidation.error)
       return
     }
 
     try {
       const newTopic = await createTopic(token, {
-        title: topicTitle,
-        content: topicDescription,
-        // username: username, // Передаем имя пользователя
+        title: escapeHTML(trimmedTitle),
+        content: escapeHTML(trimmedDescription),
       })
 
-      onTopicCreated(newTopic) // Обновляем список топиков
+      onTopicCreated(newTopic)
       handleClose()
     } catch (error) {
       console.error('Ошибка при создании нового топика:', error)
+      setError('Не удалось создать топик. Попробуйте еще раз.')
     }
   }
 
@@ -57,6 +70,9 @@ function ForumNewTopic({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Создать новый топик</DialogTitle>
         <DialogContent>
+          {error && (
+            <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>
+          )}
           <TextField
             autoFocus
             autoComplete="off"
@@ -67,7 +83,10 @@ function ForumNewTopic({
             fullWidth
             variant="outlined"
             value={topicTitle}
-            onChange={e => setTopicTitle(e.target.value)}
+            onChange={e => {
+              setTopicTitle(e.target.value)
+              setError(null) // Убираем ошибку при вводе
+            }}
           />
           <TextField
             autoComplete="off"
@@ -80,7 +99,10 @@ function ForumNewTopic({
             multiline
             rows={4}
             value={topicDescription}
-            onChange={e => setTopicDescription(e.target.value)}
+            onChange={e => {
+              setTopicDescription(e.target.value)
+              setError(null) // Убираем ошибку при вводе
+            }}
           />
         </DialogContent>
         <DialogActions>
@@ -88,7 +110,8 @@ function ForumNewTopic({
           <Button
             onClick={handleCreateTopic}
             color="primary"
-            variant="contained">
+            variant="contained"
+            disabled={!topicTitle.trim() || !topicDescription.trim()}>
             Создать
           </Button>
         </DialogActions>

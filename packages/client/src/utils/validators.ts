@@ -57,3 +57,42 @@ export const validateRepeatPassword = (
   }
   return null
 }
+
+/**
+ * Экранирование HTML-символов для предотвращения XSS.
+ * @param input - Входная строка
+ * @returns Экранированная строка
+ */
+export const escapeHTML = (input: string): string => {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+}
+
+/**
+ * Проверка комментария на длину и недопустимые символы.
+ * @param comment - Комментарий
+ * @returns Объект с результатом проверки
+ */
+export const validateComment = (
+  comment: string
+): { isValid: boolean; error: string | null } => {
+  if (comment.length > 500) {
+    return {
+      isValid: false,
+      error: 'Комментарий слишком длинный (максимум 500 символов)',
+    }
+  }
+
+  if (!/^[a-zA-Zа-яА-Я0-9\s.,!?]+$/u.test(comment)) {
+    return {
+      isValid: false,
+      error: 'Комментарий содержит недопустимые символы',
+    }
+  }
+
+  return { isValid: true, error: null }
+}

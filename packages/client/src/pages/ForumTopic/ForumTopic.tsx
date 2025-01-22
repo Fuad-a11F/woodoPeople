@@ -47,6 +47,8 @@ const ForumTopic: React.FC = () => {
           lastMessageAuthor: transformedComments.length
             ? transformedComments[transformedComments.length - 1].author
             : { name: 'Нет комментариев', avatar: '/default-avatar.jpg' },
+          updatedAt: response.data.updatedAt,
+          createdAt: response.data.createdAt,
         }
 
         setTopic(transformedTopic)
@@ -67,7 +69,6 @@ const ForumTopic: React.FC = () => {
         content: newCommentContent,
         username: 'Текущий пользователь',
       }
-
       const response = await axios.post(
         'http://localhost:3001/api/comments',
         newComment,
