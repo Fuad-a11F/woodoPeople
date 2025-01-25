@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { Comment } from '../models/Comment'
 import { Topic } from '../models/Topic'
-import { Attributes, CreationAttributes } from 'sequelize'
+import { Attributes } from 'sequelize'
 
 // Добавить комментарий к топику
 export const addComment = async (req: Request, res: Response) => {
