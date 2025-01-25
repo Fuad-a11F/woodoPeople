@@ -20,7 +20,6 @@
     "pg-hstore": "^2.3.4",
     "prettier": "^2.7.1",
     "reflect-metadata": "^0.2.2",
-    "rollup": "4.28.1",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
     "sequelize-typescript": "^2.1.6",
