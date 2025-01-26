@@ -21,6 +21,7 @@ const apiClient: AxiosInstance = axios.create({
       ? 'http://localhost:3001/api'
       : 'http://158.160.1.88/api',
 })
+// test deploy
 
 // Устанавливаем общие заголовки
 export const setAuthorizationHeader = (token: string) => {
