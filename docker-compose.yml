@@ -17,6 +17,7 @@ services:
           - SERVER_PORT=${SERVER_PORT}
           - EXTERNAL_SERVER_URL=${EXTERNAL_SERVER_URL}
           - INTERNAL_SERVER_URL=${INTERNAL_SERVER_URL}
+        platform: linux/amd64
     server:
         container_name: prakticum-server
         image: prackicum-server
@@ -32,6 +33,7 @@ services:
             - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
+        platform: linux/amd64
 
     postgres:
       image: postgres:15.2     
@@ -44,4 +46,5 @@ services:
         POSTGRES_DB: postgres
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
+      platform: linux/amd64
 
