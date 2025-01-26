@@ -14,7 +14,7 @@ const ForumTopic: React.FC = () => {
     const fetchTopic = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/topics/${topicId}`,
+          `http://158.160.1.88/api/topics/${topicId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -70,7 +70,7 @@ const ForumTopic: React.FC = () => {
         username: 'Текущий пользователь',
       }
       const response = await axios.post(
-        'http://localhost:3001/api/comments',
+        'http://158.160.1.88/api/comments',
         newComment,
         {
           headers: { Authorization: `Bearer ${token}` },
