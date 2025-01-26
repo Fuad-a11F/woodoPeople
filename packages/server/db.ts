@@ -8,7 +8,7 @@ import { Reaction } from './models/Reaction'
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
-  host: 'localhost',
+  host: 'postgres',
   port: 5432,
   username: 'postgres',
   password: 'postgres',
