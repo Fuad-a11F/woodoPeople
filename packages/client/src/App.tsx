@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 function App() {
   useEffect(() => {
     const fetchServerData = async () => {
-      const url = `http://localhost:3001/api`
+      const url = `http://158.160.1.88/api`
       const response = await fetch(url)
       const data = await response.json()
       console.log(data)
